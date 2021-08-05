@@ -1,11 +1,13 @@
 package com.yahya.task.tracker.tasktracker.restController;
 
 import com.yahya.task.tracker.tasktracker.model.Person;
+import com.yahya.task.tracker.tasktracker.model.Task;
 import com.yahya.task.tracker.tasktracker.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/person")
@@ -49,5 +51,14 @@ public class PersonController implements BasicRestControllerSkeleton<Person> {
     public void delete(@PathVariable Integer id) {
         personService.deleteById(id);
     }
+
+//    Custom Controllers
+
+    @GetMapping("/{id}/tasks")
+    public Set<Task> getPersonsTasks(@PathVariable Integer id) {
+        return personService.findTaskByPersonId(id);
+    }
+
+
 
 }

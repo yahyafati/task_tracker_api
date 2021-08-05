@@ -1,10 +1,7 @@
 package com.yahya.task.tracker.tasktracker.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -25,6 +22,7 @@ public class Task {
     private String description;
     private LocalDateTime addedDate;
     private LocalDate dueDate;
+    private boolean closed = false;
 
     @ManyToMany
     @JsonIgnore @ToString.Exclude

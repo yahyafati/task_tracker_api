@@ -1,12 +1,14 @@
 package com.yahya.task.tracker.tasktracker.service.implementation;
 
 import com.yahya.task.tracker.tasktracker.dao.TaskDao;
+import com.yahya.task.tracker.tasktracker.model.Person;
 import com.yahya.task.tracker.tasktracker.model.Task;
 import com.yahya.task.tracker.tasktracker.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -37,5 +39,15 @@ public class TaskServiceImpl implements TaskService {
     public boolean deleteById(Integer id) {
         taskDao.deleteById(id);
         return true;
+    }
+
+    @Override
+    public Set<Person> findPersonByTask(Task task) {
+        return task.getPersons();
+    }
+
+    @Override
+    public Set<Person> findPersonByTaskId(int taskId) {
+        return findPersonByTask(findById(taskId));
     }
 }
