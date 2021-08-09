@@ -2,6 +2,7 @@ package com.yahya.task.tracker.tasktracker.restController;
 
 import com.yahya.task.tracker.tasktracker.model.Person;
 import com.yahya.task.tracker.tasktracker.model.Task;
+import com.yahya.task.tracker.tasktracker.model.TaskPerson;
 import com.yahya.task.tracker.tasktracker.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -54,7 +55,7 @@ public class TaskController implements BasicRestControllerSkeleton<Task> {
 
 //    Custom Controllers
     @GetMapping("/{id}/persons")
-    public Set<Person> getTasksPersons(@PathVariable Integer id) {
+    public Set<TaskPerson> getTasksPersons(@PathVariable Integer id) {
         return taskService.findPersonByTaskId(id);
     }
 }

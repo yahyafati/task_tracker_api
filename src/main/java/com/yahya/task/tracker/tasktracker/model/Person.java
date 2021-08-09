@@ -1,9 +1,7 @@
 package com.yahya.task.tracker.tasktracker.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -11,6 +9,8 @@ import java.util.Set;
 
 @Entity
 @Getter @Setter @ToString
+@Builder
+@NoArgsConstructor @AllArgsConstructor
 public class Person {
 
     @Id
@@ -18,7 +18,7 @@ public class Person {
     private int id;
     private String name;
 
-    @ManyToMany(mappedBy = "persons")
-    @JsonIgnore @ToString.Exclude
-    private Set<Task> tasks = new HashSet<>();
+    @OneToMany(mappedBy = "person")
+    @JsonIgnore @ToString.Exclude @Builder.Default
+    private Set<TaskPerson> taskPeople = new HashSet<>();
 }

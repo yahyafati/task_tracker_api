@@ -1,26 +1,17 @@
 package com.yahya.task.tracker.tasktracker.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+public enum Priority {
+    LOW("Low"),
+    MEDIUM("Medium"),
+    HIGH("High");
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+    private final String displayName;
 
-@Entity
-@Getter @Setter @ToString
-public class Priority {
+    Priority(String displayName) {
+        this.displayName = displayName;
+    }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    private String name;
-    private Integer level;
-
-    @OneToMany(mappedBy = "priority")
-    @JsonIgnore @ToString.Exclude
-    private Set<Task> tasks = new HashSet<>();
+    public String getDisplayName() {
+        return displayName;
+    }
 }

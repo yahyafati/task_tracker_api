@@ -3,6 +3,7 @@ package com.yahya.task.tracker.tasktracker.service.implementation;
 import com.yahya.task.tracker.tasktracker.dao.PersonDao;
 import com.yahya.task.tracker.tasktracker.model.Person;
 import com.yahya.task.tracker.tasktracker.model.Task;
+import com.yahya.task.tracker.tasktracker.model.TaskPerson;
 import com.yahya.task.tracker.tasktracker.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,12 +43,12 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Set<Task> findTaskByPerson(Person person) {
-        return person.getTasks();
+    public Set<TaskPerson> findTaskByPerson(Person person) {
+        return person.getTaskPeople();
     }
 
     @Override
-    public Set<Task> findTaskByPersonId(int personId) {
+    public Set<TaskPerson> findTaskByPersonId(int personId) {
         return findTaskByPerson(findById(personId));
     }
 }

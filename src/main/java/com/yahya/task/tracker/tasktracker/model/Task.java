@@ -12,6 +12,8 @@ import java.util.Set;
 
 @Entity
 @Getter @Setter @ToString
+@NoArgsConstructor @AllArgsConstructor
+@Builder
 public class Task {
 
     @Id
@@ -20,14 +22,27 @@ public class Task {
 
     private String issue;
     private String description;
-    private LocalDateTime addedDate;
+    private LocalDateTime addedDate = LocalDateTime.now();
     private LocalDate dueDate;
     private boolean closed = false;
 
-    @ManyToMany
-    @JsonIgnore @ToString.Exclude
-    private Set<Person> persons = new HashSet<>();
-    @ManyToOne
+    @Enumerated(EnumType.STRING)
     private Priority priority;
 
+    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "task")
+    @JsonIgnore @ToString.Exclude @Builder.Default
+    private Set<TaskPerson> taskPeople = new HashSet<>();
+
+    private void addPerson(Person person, boolean leader) {
+        TaskPerson taskPerson = new TaskPerson(this, person, leader);
+        taskPeople.add(taskPerson);
+    }
+
+    public void addAssignee(Person person) {
+        addPerson(person, false);
+    }
+
+    public void addLeader(Person person) {
+        addPerson(person, true);
+    }
 }
