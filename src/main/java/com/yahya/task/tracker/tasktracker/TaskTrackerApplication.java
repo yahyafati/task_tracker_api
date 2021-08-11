@@ -2,6 +2,7 @@ package com.yahya.task.tracker.tasktracker;
 
 import com.yahya.task.tracker.tasktracker.model.Person;
 import com.yahya.task.tracker.tasktracker.model.Priority;
+import com.yahya.task.tracker.tasktracker.model.Status;
 import com.yahya.task.tracker.tasktracker.model.Task;
 import com.yahya.task.tracker.tasktracker.service.PersonService;
 import com.yahya.task.tracker.tasktracker.service.TaskService;
@@ -25,6 +26,8 @@ public class TaskTrackerApplication {
     @Bean
     public CommandLineRunner initializeDatabase(TaskService taskService, PersonService personService, TrackService trackService) {
         return args -> {
+            if (taskService.findAll().size() > 0) return;
+
             Task hananTask = Task.builder()
                     .issue("Hanan Passport Appointment")
                     .description("This is Hanan's Passport Appointment.")
@@ -36,12 +39,14 @@ public class TaskTrackerApplication {
                     .description("This is Mame's Passport Appointment.")
                     .dueDate(LocalDate.of(2021, Month.AUGUST, 21))
                     .priority(Priority.MEDIUM)
+                    .status(Status.DONE)
                     .build();
             Task ilhamTask = Task.builder()
                     .issue("Ilham Passport Appointment")
                     .description("This is Ilham's Passport Appointment.")
                     .dueDate(LocalDate.of(2021, Month.AUGUST, 31))
                     .priority(Priority.LOW)
+                    .status(Status.CANCELLED)
                     .build();
 
             Task allTask = Task.builder()
@@ -75,10 +80,10 @@ public class TaskTrackerApplication {
             allTask.addAssignee(mame);
             allTask.addAssignee(ilham);
 
-            taskService.save(hananTask);
-            taskService.save(ilhamTask);
-            taskService.save(mameTask);
-            taskService.save(allTask);
+            taskService.saveNew(hananTask);
+            taskService.saveNew(ilhamTask);
+            taskService.saveNew(mameTask);
+            taskService.saveNew(allTask);
 
             System.out.println("\n\nInitiated\n\n");
         };

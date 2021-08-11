@@ -1,9 +1,11 @@
 package com.yahya.task.tracker.tasktracker.restController;
 
-import com.yahya.task.tracker.tasktracker.model.Person;
 import com.yahya.task.tracker.tasktracker.model.Task;
 import com.yahya.task.tracker.tasktracker.model.TaskPerson;
+import com.yahya.task.tracker.tasktracker.model.Track;
+import com.yahya.task.tracker.tasktracker.service.TaskPersonService;
 import com.yahya.task.tracker.tasktracker.service.TaskService;
+import com.yahya.task.tracker.tasktracker.service.TrackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,13 +14,18 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/task")
+@CrossOrigin("http://localhost:3000")
 public class TaskController implements BasicRestControllerSkeleton<Task> {
 
     private final TaskService taskService;
+    private final TaskPersonService taskPersonService;
+    private final TrackService trackService;
 
     @Autowired
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService, TaskPersonService taskPersonService, TrackService trackService) {
         this.taskService = taskService;
+        this.taskPersonService = taskPersonService;
+        this.trackService = trackService;
     }
 
     @Override
@@ -37,13 +44,18 @@ public class TaskController implements BasicRestControllerSkeleton<Task> {
     @PostMapping("")
     public Task add(@RequestBody Task item) {
         item.setId(0);
-        return taskService.save(item);
+        return taskService.saveNew(item);
     }
 
     @Override
     @PutMapping("/{id}")
     public Task update(@PathVariable Integer id, @RequestBody Task updatedItem) {
         updatedItem.setId(id);
+
+        Task oldItem = taskService.findById(id);
+        oldItem.getAssignees().forEach(updatedItem::addAssignee);
+        oldItem.getTracks().forEach(updatedItem::addTrack);
+
         return taskService.save(updatedItem);
     }
 
@@ -54,8 +66,49 @@ public class TaskController implements BasicRestControllerSkeleton<Task> {
     }
 
 //    Custom Controllers
+
+    //    Task Person
     @GetMapping("/{id}/persons")
-    public Set<TaskPerson> getTasksPersons(@PathVariable Integer id) {
+    public Set<TaskPerson> getAssignees(@PathVariable Integer id) {
         return taskService.findPersonByTaskId(id);
+    }
+
+    @PostMapping("/{id}/persons")
+    public TaskPerson getAssignees(@PathVariable Integer id, @RequestBody TaskPerson taskPerson) {
+        Task task = taskService.findById(id);
+        taskPerson.setTask(task);
+        return taskPersonService.save(taskPerson);
+    }
+
+    @PutMapping("/{task_id}/persons/{taskPerson_id}")
+    public TaskPerson updateAssignee(@PathVariable Integer task_id,
+                                     @PathVariable Integer taskPerson_id,
+                                     @RequestBody TaskPerson updatedTaskPerson) {
+        updatedTaskPerson.setId(taskPerson_id);
+        return taskPersonService.save(updatedTaskPerson);
+    }
+
+    @DeleteMapping("/{task_id}/persons/{taskPerson_id}")
+    public void removeAssignee(@PathVariable Integer task_id, @PathVariable Integer taskPerson_id) {
+        taskPersonService.deleteById(taskPerson_id);
+    }
+
+
+//    Tracks Controller
+    @GetMapping("/{id}/tracks")
+    public Set<Track> getTracks(@PathVariable Integer id) {
+        return taskService.findTracksByTaskId(id);
+    }
+
+    @PostMapping("/{id}/tracks")
+    public Track addTrack(@PathVariable Integer id, @RequestBody Track track) {
+        Task task = taskService.findById(id);
+        track.setTask(task);
+        return trackService.save(track);
+    }
+
+    @DeleteMapping("/{task_id}/tracks/{track_id}")
+    public void deleteTask(@PathVariable Integer task_id, @PathVariable Integer track_id) {
+        trackService.deleteById(track_id);
     }
 }

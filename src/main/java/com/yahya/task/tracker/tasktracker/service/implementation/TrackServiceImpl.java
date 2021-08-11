@@ -6,6 +6,7 @@ import com.yahya.task.tracker.tasktracker.service.TrackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -25,6 +26,7 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
     public Track save(Track item) {
+        item.setAddedTime(LocalDateTime.now());
         return trackDao.save(item);
     }
 

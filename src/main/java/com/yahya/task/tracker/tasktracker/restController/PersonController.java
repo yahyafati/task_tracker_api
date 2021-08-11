@@ -12,6 +12,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/person")
+@CrossOrigin("http://localhost:3000")
 public class PersonController implements BasicRestControllerSkeleton<Person> {
 
     private final PersonService personService;
