@@ -35,24 +35,24 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task save(Task item) {
-        item = taskDao.save(item);
-        final Task finalItem = item;
+        final Task savedItem = taskDao.save(item);
+
         item.getAssignees().forEach(taskPerson -> {
-            taskPerson.setTask(finalItem);
+            taskPerson.setTask(savedItem);
             taskPersonService.save(taskPerson);
         });
-        item.getTracks().forEach(track -> {
-            track.setTask(finalItem);
-            trackService.save(track);
-        });
-        return item;
+        return savedItem;
     }
 
     @Override
     public Task saveNew(Task item) {
-        Track initialTrack = new Track("Task Created", "Task has been created", LocalDate.now());
-        item.addTrack(initialTrack);
-        return save(item);
+        Task savedItem = save(item);
+        Track initialTrack = new Track(
+                "Task Created", "Task has been created",
+                LocalDate.now(), savedItem);
+        trackService.save(initialTrack);
+
+        return savedItem;
     }
     @Override
     public List<Task> findAll() {

@@ -19,7 +19,6 @@ public class TaskPerson {
     private int id;
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(nullable = false)
     private Task task;
     @ManyToOne
     @JoinColumn(nullable = false)

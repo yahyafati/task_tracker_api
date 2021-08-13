@@ -52,9 +52,9 @@ public class TaskController implements BasicRestControllerSkeleton<Task> {
     public Task update(@PathVariable Integer id, @RequestBody Task updatedItem) {
         updatedItem.setId(id);
 
-        Task oldItem = taskService.findById(id);
-        oldItem.getAssignees().forEach(updatedItem::addAssignee);
-        oldItem.getTracks().forEach(updatedItem::addTrack);
+//        Task oldItem = taskService.findById(id);
+//        oldItem.getAssignees().forEach(updatedItem::addAssignee);
+//        oldItem.getTracks().forEach(updatedItem::addTrack);
 
         return taskService.save(updatedItem);
     }

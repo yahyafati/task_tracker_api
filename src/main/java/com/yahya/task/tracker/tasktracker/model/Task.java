@@ -31,7 +31,7 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private Priority priority;
 
-    @OneToMany(orphanRemoval = true, mappedBy = "task", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "task", fetch = FetchType.EAGER)
     @ToString.Exclude @Builder.Default
     private Set<TaskPerson> assignees = new HashSet<>();
 
