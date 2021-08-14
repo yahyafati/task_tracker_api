@@ -1,14 +1,15 @@
 package com.yahya.task.tracker.tasktracker.service.implementation;
 
 import com.yahya.task.tracker.tasktracker.dao.TaskDao;
+import com.yahya.task.tracker.tasktracker.dao.TaskPersonDao;
 import com.yahya.task.tracker.tasktracker.model.Task;
 import com.yahya.task.tracker.tasktracker.model.TaskPerson;
 import com.yahya.task.tracker.tasktracker.model.Track;
-import com.yahya.task.tracker.tasktracker.service.TaskPersonService;
 import com.yahya.task.tracker.tasktracker.service.TaskService;
 import com.yahya.task.tracker.tasktracker.service.TrackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,13 +19,15 @@ import java.util.Set;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskDao taskDao;
-    private final TaskPersonService taskPersonService;
+//    private final TaskPersonService taskPersonService;
+    private final TaskPersonDao taskPersonDao;
     private final TrackService trackService;
 
     @Autowired
-    public TaskServiceImpl(TaskDao taskDao, TaskPersonService taskPersonService, TrackService trackService) {
+    public TaskServiceImpl(TaskDao taskDao, TaskPersonDao taskPersonDao, TrackService trackService) {
         this.taskDao = taskDao;
-        this.taskPersonService = taskPersonService;
+        this.taskPersonDao = taskPersonDao;
+//        this.taskPersonService = taskPersonService;
         this.trackService = trackService;
     }
 
@@ -34,13 +37,21 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @Transactional
     public Task save(Task item) {
-        final Task savedItem = taskDao.save(item);
+        Task savedItem = taskDao.save(item);
 
+
+        taskPersonDao.deleteAllByTaskId(savedItem.getId());
+
+        Task finalSavedItem = savedItem;
         item.getAssignees().forEach(taskPerson -> {
-            taskPerson.setTask(savedItem);
-            taskPersonService.save(taskPerson);
+            taskPerson.setTask(finalSavedItem);
+            taskPersonDao.save(taskPerson);
         });
+
+
+        savedItem = findById(savedItem.getId());
         return savedItem;
     }
 

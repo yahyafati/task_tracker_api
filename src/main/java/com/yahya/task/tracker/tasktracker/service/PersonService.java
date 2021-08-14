@@ -8,6 +8,6 @@ import java.util.Set;
 
 public interface PersonService extends BasicServiceSkeleton<Person> {
 
-    Set<TaskPerson> findTaskByPerson(Person person);
-    Set<TaskPerson> findTaskByPersonId(int id);
+//    Set<TaskPerson> findTaskByPerson(Person person);
+//    Set<TaskPerson> findTaskByPersonId(int id);
 }

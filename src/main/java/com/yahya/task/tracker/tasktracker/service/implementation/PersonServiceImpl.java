@@ -7,11 +7,13 @@ import com.yahya.task.tracker.tasktracker.model.TaskPerson;
 import com.yahya.task.tracker.tasktracker.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
 
 @Service
+@Transactional
 public class PersonServiceImpl implements PersonService {
 
     private final PersonDao personDao;
@@ -40,19 +42,28 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public boolean deleteById(Integer id) {
-        Person person = findById(id);
-        person.getTaskPeople().forEach(taskPersonDao::delete);
+//        Person person = findById(id);
+//        person.getTaskPeople().forEach(taskPerson -> {
+//            System.out.println("\n\n" + taskPerson + "\n\n");
+//            taskPersonDao.delete(taskPerson);
+//        });
+//        List<TaskPerson> copyTaskPeople = taskPersonDao.findAllByPersonId(id);
+        taskPersonDao.deleteAllByPersonId(id);
+//        copyTaskPeople.forEach(taskPerson -> {
+////            taskPerson.setPerson(null);
+//            taskPersonDao.deleteById(taskPerson.getId());
+//        });
         personDao.deleteById(id);
         return true;
     }
 
-    @Override
-    public Set<TaskPerson> findTaskByPerson(Person person) {
-        return person.getTaskPeople();
-    }
-
-    @Override
-    public Set<TaskPerson> findTaskByPersonId(int personId) {
-        return findTaskByPerson(findById(personId));
-    }
+//    @Override
+//    public Set<TaskPerson> findTaskByPerson(Person person) {
+//        return person.getTaskPeople();
+//    }
+//
+//    @Override
+//    public Set<TaskPerson> findTaskByPersonId(int personId) {
+//        return findTaskByPerson(findById(personId));
+//    }
 }

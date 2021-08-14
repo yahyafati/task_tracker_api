@@ -55,11 +55,11 @@ public class PersonController implements BasicRestControllerSkeleton<Person> {
     }
 
 //    Custom Controllers
-
-    @GetMapping("/{id}/tasks")
-    public Set<TaskPerson> getPersonsTasks(@PathVariable Integer id) {
-        return personService.findTaskByPersonId(id);
-    }
+//
+//    @GetMapping("/{id}/tasks")
+//    public Set<TaskPerson> getPersonsTasks(@PathVariable Integer id) {
+//        return personService.findTaskByPersonId(id);
+//    }
 
 
 

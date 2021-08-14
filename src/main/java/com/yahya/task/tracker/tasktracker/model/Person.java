@@ -20,7 +20,11 @@ public class Person {
     @Builder.Default
     private String email = "";
 
-    @OneToMany(mappedBy = "person")
+
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,
+//            mappedBy = "person", fetch = FetchType.EAGER)
+    @OneToMany(orphanRemoval = true, mappedBy = "person", fetch = FetchType.EAGER)
     @JsonIgnore @ToString.Exclude @Builder.Default
     private Set<TaskPerson> taskPeople = new HashSet<>();
+
 }
