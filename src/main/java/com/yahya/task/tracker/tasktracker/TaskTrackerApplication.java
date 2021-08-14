@@ -68,9 +68,28 @@ public class TaskTrackerApplication {
                     .name("Ilham Fati")
                     .build();
 
+            Person munir = Person.builder()
+                    .name("Munir Fati")
+                    .build();
+
+            Person salim = Person.builder()
+                    .name("Salim")
+                    .build();
+            Person abuke = Person.builder()
+                    .name("Abuke")
+                    .build();
+            Person zakiya = Person.builder()
+                    .name("Zako")
+                    .build();
+
             personService.save(hanan);
             personService.save(mame);
             personService.save(ilham);
+            personService.save(munir);
+            personService.save(salim);
+            personService.save(abuke);
+            personService.save(zakiya);
+
 
             hananTask.addLeader(hanan);
             mameTask.addLeader(mame);

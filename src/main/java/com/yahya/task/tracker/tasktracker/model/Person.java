@@ -17,6 +17,8 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    @Builder.Default
+    private String email = "";
 
     @OneToMany(mappedBy = "person")
     @JsonIgnore @ToString.Exclude @Builder.Default
