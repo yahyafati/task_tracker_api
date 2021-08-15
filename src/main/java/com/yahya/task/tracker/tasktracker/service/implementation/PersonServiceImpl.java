@@ -3,14 +3,12 @@ package com.yahya.task.tracker.tasktracker.service.implementation;
 import com.yahya.task.tracker.tasktracker.dao.PersonDao;
 import com.yahya.task.tracker.tasktracker.dao.TaskPersonDao;
 import com.yahya.task.tracker.tasktracker.model.Person;
-import com.yahya.task.tracker.tasktracker.model.TaskPerson;
 import com.yahya.task.tracker.tasktracker.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 @Transactional

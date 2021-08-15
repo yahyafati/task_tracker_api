@@ -10,10 +10,8 @@ import com.yahya.task.tracker.tasktracker.service.TrackService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Month;
 
 @SpringBootApplication
@@ -23,7 +21,7 @@ public class TaskTrackerApplication {
         SpringApplication.run(TaskTrackerApplication.class, args);
     }
 
-    @Bean
+//    @Bean
     public CommandLineRunner initializeDatabase(TaskService taskService, PersonService personService, TrackService trackService) {
         return args -> {
             if (taskService.findAll().size() > 0) return;

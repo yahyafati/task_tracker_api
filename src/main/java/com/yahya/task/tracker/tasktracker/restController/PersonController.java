@@ -1,18 +1,15 @@
 package com.yahya.task.tracker.tasktracker.restController;
 
 import com.yahya.task.tracker.tasktracker.model.Person;
-import com.yahya.task.tracker.tasktracker.model.Task;
-import com.yahya.task.tracker.tasktracker.model.TaskPerson;
 import com.yahya.task.tracker.tasktracker.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/person")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("*")
 public class PersonController implements BasicRestControllerSkeleton<Person> {
 
     private final PersonService personService;

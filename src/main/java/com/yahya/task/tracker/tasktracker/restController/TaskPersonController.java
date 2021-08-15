@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/taskperson")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("*")
 public class TaskPersonController implements BasicRestControllerSkeleton<TaskPerson>{
 
     private final TaskPersonService taskPersonService;
