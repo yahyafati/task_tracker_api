@@ -1,12 +1,16 @@
 package com.yahya.task.tracker.tasktracker.gui;
 
 import com.yahya.task.tracker.tasktracker.TaskTrackerApplication;
+import lombok.SneakyThrows;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.util.Objects;
 import java.util.concurrent.Executors;
 
 public class MainFrame extends JFrame {
@@ -20,26 +24,6 @@ public class MainFrame extends JFrame {
     JButton stopServiceButton;
     TrayIcon trayIcon = null;
     private Status currentStatus;
-
-
-    enum Status {
-        RUNNING("Running"), STARTING("Starting"), SHUTTING("Shutting Down"), CLOSED("Closed");
-
-        private final String status;
-
-        Status(String status) {
-            this.status = status;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-
-        public String displayStatus() {
-            return "Server is " + status;
-        }
-
-    }
 
     private ConfigurableApplicationContext ctx;
     public MainFrame(String[] args) {
@@ -64,10 +48,10 @@ public class MainFrame extends JFrame {
         this.setState(JFrame.NORMAL);
     }
 
-//    @SneakyThrows
-//    private ImageIcon getImageResource(String resourceName) {
-//        return new ImageIcon(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(resourceName))));
-//    }
+    @SneakyThrows
+    private BufferedImage getImageResource(String resourceName) {
+        return ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(resourceName)));
+    }
 
     private void initTray() {
         if (SystemTray.isSupported()) {
@@ -149,15 +133,17 @@ public class MainFrame extends JFrame {
 
     void stopService() {
         Executors.newSingleThreadExecutor().execute(() -> {
+            setCursor(new Cursor(Cursor.WAIT_CURSOR));
             setCurrentStatus(Status.SHUTTING);
             if (ctx != null) {
                 ctx.close();
-                setCurrentStatus(Status.CLOSED);
                 System.out.println("Active: " + ctx.isActive());
                 System.out.println("Running: " + ctx.isRunning());
             }
             ctx = null;
+            setCurrentStatus(Status.CLOSED);
             startServiceButton.setEnabled(true);
+            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         });
     }
 
@@ -186,6 +172,7 @@ public class MainFrame extends JFrame {
     }
 
     void initButtonSize(JButton button) {
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
         button.setPreferredSize(new Dimension(200, 50));
         button.setMinimumSize(new Dimension(200, 50));
         button.setMaximumSize(new Dimension(200, 50));
@@ -193,10 +180,11 @@ public class MainFrame extends JFrame {
     }
 
     void init() {
-        JPanel contentPane = new JPanel();
+        ImagePanel contentPane = new ImagePanel(getImageResource("/images/bg (1).jpg"));
         contentPane.setLayout(new GridBagLayout());
 
         JPanel buttons = new JPanel();
+        buttons.setOpaque(false);
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.PAGE_AXIS));
 
         status = new JLabel("Not Running");
@@ -226,4 +214,7 @@ public class MainFrame extends JFrame {
         setContentPane(contentPane);
     }
 
+    public Status getCurrentStatus() {
+        return currentStatus;
+    }
 }
