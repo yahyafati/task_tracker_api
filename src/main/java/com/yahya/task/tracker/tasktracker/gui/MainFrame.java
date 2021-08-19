@@ -10,8 +10,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 public class MainFrame extends JFrame {
 
@@ -23,7 +26,6 @@ public class MainFrame extends JFrame {
     Button startServiceButton;
     Button stopServiceButton;
     TrayIcon trayIcon = null;
-    private Status currentStatus;
 
     private ConfigurableApplicationContext ctx;
     public MainFrame(String[] args) {
@@ -37,6 +39,18 @@ public class MainFrame extends JFrame {
         init();
         initEvents();
         initTray();
+
+        workOnArgs();
+    }
+
+    private void workOnArgs() {
+        ArrayList<String> argsList = (ArrayList<String>) Arrays.stream(args).collect(Collectors.toList());
+        if (argsList.contains("--startup")) {
+            setState(JFrame.ICONIFIED);
+            startService();
+        } else if (argsList.contains("--start")) {
+            startService();
+        }
     }
 
     private void exitWindow() {
@@ -149,7 +163,6 @@ public class MainFrame extends JFrame {
     }
 
     void setCurrentStatus(Status currentStatus) {
-        this.currentStatus = currentStatus;
         status.setToolTipText(currentStatus.displayStatus());
         trayIcon.setToolTip("Task Tracker Server - [" + currentStatus.getStatus() + "]");
 
@@ -168,17 +181,16 @@ public class MainFrame extends JFrame {
             trayIcon.setImage(imageIcon.getImage());
         }
         setIconImage(imageIcon.getImage());
-        Image scaledImage = imageIcon.getImage().getScaledInstance(128,128, Image.SCALE_DEFAULT);
-        status.setIcon(new ImageIcon(scaledImage));
+        status.setIcon(imageIcon);
     }
 
     void startService() {
         Executors.newSingleThreadExecutor().execute(() -> {
             this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-            setCurrentStatus(Status.STARTING);
             startServiceButton.setEnabled(false);
             stopServiceButton.setEnabled(false);
             if (ctx == null) {
+                setCurrentStatus(Status.STARTING);
                 ctx = SpringApplication.run(TaskTrackerApplication.class, args);
                 setCurrentStatus(Status.RUNNING);
             }
@@ -206,6 +218,7 @@ public class MainFrame extends JFrame {
 
         JPanel buttonsPanelContainer = new JPanel(new GridBagLayout());
         JPanel buttons = new JPanel();
+
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.PAGE_AXIS));
         buttons.setBounds(0,0, getWidth(), getHeight());
 
@@ -218,7 +231,7 @@ public class MainFrame extends JFrame {
         stopServiceButton = new Button("Stop",
                 new ImageIcon(getImageResource("/images/icons/stop.png")));
         stopServiceButton.addActionListener(e -> {
-            int response = JOptionPane.showConfirmDialog(mainFrame, "Are you sure you want to stop ther server?",
+            int response = JOptionPane.showConfirmDialog(mainFrame, "Are you sure you want to stop the server?",
                     "You sure?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.YES_OPTION) {
                 stopService();
@@ -241,7 +254,4 @@ public class MainFrame extends JFrame {
         setContentPane(contentPane);
     }
 
-    public Status getCurrentStatus() {
-        return currentStatus;
-    }
 }
