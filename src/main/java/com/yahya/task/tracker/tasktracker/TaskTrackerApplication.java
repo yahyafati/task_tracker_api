@@ -35,6 +35,7 @@ public class TaskTrackerApplication {
                         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                     }
                 }
+//                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }

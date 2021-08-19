@@ -18,10 +18,10 @@ public class MainFrame extends JFrame {
     private final String[] args;
     private final MainFrame mainFrame;
     PopupMenu popupMenu;
-    JLabel status;
+    StatusLabel status;
 
-    JButton startServiceButton;
-    JButton stopServiceButton;
+    Button startServiceButton;
+    Button stopServiceButton;
     TrayIcon trayIcon = null;
     private Status currentStatus;
 
@@ -56,7 +56,7 @@ public class MainFrame extends JFrame {
     private void initTray() {
         if (SystemTray.isSupported()) {
             SystemTray tray = SystemTray.getSystemTray();
-            BufferedImage bufferedImage = getImageResource("/images/icons/server.png");
+            BufferedImage bufferedImage = getImageResource("/images/statusIcons/server.png");
             popupMenu = new PopupMenu();
 
             MenuItem startItem = new MenuItem("Start Server");
@@ -155,13 +155,13 @@ public class MainFrame extends JFrame {
 
         ImageIcon imageIcon;
         if (currentStatus == Status.RUNNING) {
-            imageIcon = new ImageIcon(getImageResource("/images/icons/running_server.png"));
+            imageIcon = new ImageIcon(getImageResource("/images/statusIcons/running_server.png"));
         } else if (currentStatus == Status.CLOSED) {
-            imageIcon = new ImageIcon(getImageResource("/images/icons/closed_server.png"));
+            imageIcon = new ImageIcon(getImageResource("/images/statusIcons/closed_server.png"));
         } else if (currentStatus == Status.SHUTTING || currentStatus == Status.STARTING) {
-            imageIcon = new ImageIcon(getImageResource("/images/icons/loading_server.png"));
+            imageIcon = new ImageIcon(getImageResource("/images/statusIcons/loading_server.png"));
         } else {
-            imageIcon = new ImageIcon(getImageResource("/images/icons/server.png"));
+            imageIcon = new ImageIcon(getImageResource("/images/statusIcons/server.png"));
         }
 
         if (trayIcon != null) {
@@ -185,53 +185,22 @@ public class MainFrame extends JFrame {
             System.out.println("Active: " + ctx.isActive());
             System.out.println("Running: " + ctx.isRunning());
             stopServiceButton.setEnabled(true);
+            stopServiceButton.requestFocus();
             this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         });
     }
 
-    void initButton(JButton button) {
-        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.setAlignmentY(Component.CENTER_ALIGNMENT);
-        button.setPreferredSize(new Dimension(200, 50));
-        button.setMinimumSize(new Dimension(200, 50));
-        button.setMaximumSize(new Dimension(200, 50));
-        button.setSize(new Dimension(200, 50));
-    }
-
     void init() {
-        ImageIcon icon = new ImageIcon(getImageResource("/images/icons/server.png"));
+        ImageIcon icon = new ImageIcon(getImageResource("/images/statusIcons/server.png"));
         setIconImage(icon.getImage());
 
         ImagePanel contentPane = new ImagePanel();
         contentPane.setLayout(new GridLayout());
-        status = new JLabel("",
+        status = new StatusLabel(
                 new ImageIcon(
-                        getImageResource("/images/icons/server.png")
+                        getImageResource("/images/statusIcons/server.png")
                                 .getScaledInstance(128, 128, Image.SCALE_DEFAULT)
-                ),
-                JLabel.CENTER) {
-
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-
-                if (status.getIcon() != null) {
-                    Graphics2D g2 = (Graphics2D) g;
-                    g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-                    ImageIcon icon = (ImageIcon) status.getIcon();
-                    int h = icon.getImage().getHeight(null);
-                    int w = icon.getImage().getWidth(null);
-
-                    int startX = status.getWidth()/2 - w/2;
-                    int startY = status.getHeight()/2 - h/2;
-
-                    g2.drawImage(icon.getImage(), startX, startY, null);
-                }
-            }
-        };
+                ));
         status.setBackground(Color.decode("#eeeeee"));
         status.setOpaque(true);
 
@@ -242,17 +211,22 @@ public class MainFrame extends JFrame {
 
 
 
-        startServiceButton = new JButton("Start");
-        initButton(startServiceButton);
+        startServiceButton = new Button("Start",
+                new ImageIcon(getImageResource("/images/icons/start.png")));
         startServiceButton.addActionListener(e -> startService());
 
-        stopServiceButton = new JButton("Stop");
-        initButton(stopServiceButton);
-        stopServiceButton.addActionListener(e -> stopService());
+        stopServiceButton = new Button("Stop",
+                new ImageIcon(getImageResource("/images/icons/stop.png")));
+        stopServiceButton.addActionListener(e -> {
+            int response = JOptionPane.showConfirmDialog(mainFrame, "Are you sure you want to stop ther server?",
+                    "You sure?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (response == JOptionPane.YES_OPTION) {
+                stopService();
+            }
+        });
 
-        JButton exitServiceButton = new JButton("Exit");
+        Button exitServiceButton = new Button("Exit", new ImageIcon(getImageResource("/images/icons/exit.png")));
         exitServiceButton.addActionListener(e -> exitWindow());
-        initButton(exitServiceButton);
 
         buttons.add(startServiceButton);
         buttons.add(stopServiceButton);
