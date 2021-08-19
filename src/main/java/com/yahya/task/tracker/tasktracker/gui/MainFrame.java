@@ -150,14 +150,16 @@ public class MainFrame extends JFrame {
 
     void setCurrentStatus(Status currentStatus) {
         this.currentStatus = currentStatus;
-        status.setText(currentStatus.displayStatus());
+        status.setToolTipText(currentStatus.displayStatus());
         trayIcon.setToolTip("Task Tracker Server - [" + currentStatus.getStatus() + "]");
 
-        ImageIcon imageIcon = null;
+        ImageIcon imageIcon;
         if (currentStatus == Status.RUNNING) {
             imageIcon = new ImageIcon(getImageResource("/images/icons/running_server.png"));
         } else if (currentStatus == Status.CLOSED) {
             imageIcon = new ImageIcon(getImageResource("/images/icons/closed_server.png"));
+        } else if (currentStatus == Status.SHUTTING || currentStatus == Status.STARTING) {
+            imageIcon = new ImageIcon(getImageResource("/images/icons/loading_server.png"));
         } else {
             imageIcon = new ImageIcon(getImageResource("/images/icons/server.png"));
         }
@@ -166,6 +168,8 @@ public class MainFrame extends JFrame {
             trayIcon.setImage(imageIcon.getImage());
         }
         setIconImage(imageIcon.getImage());
+        Image scaledImage = imageIcon.getImage().getScaledInstance(128,128, Image.SCALE_DEFAULT);
+        status.setIcon(new ImageIcon(scaledImage));
     }
 
     void startService() {
@@ -176,7 +180,6 @@ public class MainFrame extends JFrame {
             stopServiceButton.setEnabled(false);
             if (ctx == null) {
                 ctx = SpringApplication.run(TaskTrackerApplication.class, args);
-                status.setText("Server is Running");
                 setCurrentStatus(Status.RUNNING);
             }
             System.out.println("Active: " + ctx.isActive());
@@ -186,8 +189,10 @@ public class MainFrame extends JFrame {
         });
     }
 
-    void initButtonSize(JButton button) {
+    void initButton(JButton button) {
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setAlignmentY(Component.CENTER_ALIGNMENT);
         button.setPreferredSize(new Dimension(200, 50));
         button.setMinimumSize(new Dimension(200, 50));
         button.setMaximumSize(new Dimension(200, 50));
@@ -199,34 +204,64 @@ public class MainFrame extends JFrame {
         setIconImage(icon.getImage());
 
         ImagePanel contentPane = new ImagePanel();
-        contentPane.setLayout(new GridBagLayout());
+        contentPane.setLayout(new GridLayout());
+        status = new JLabel("",
+                new ImageIcon(
+                        getImageResource("/images/icons/server.png")
+                                .getScaledInstance(128, 128, Image.SCALE_DEFAULT)
+                ),
+                JLabel.CENTER) {
 
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+
+                if (status.getIcon() != null) {
+                    Graphics2D g2 = (Graphics2D) g;
+                    g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                    ImageIcon icon = (ImageIcon) status.getIcon();
+                    int h = icon.getImage().getHeight(null);
+                    int w = icon.getImage().getWidth(null);
+
+                    int startX = status.getWidth()/2 - w/2;
+                    int startY = status.getHeight()/2 - h/2;
+
+                    g2.drawImage(icon.getImage(), startX, startY, null);
+                }
+            }
+        };
+        status.setBackground(Color.decode("#eeeeee"));
+        status.setOpaque(true);
+
+        JPanel buttonsPanelContainer = new JPanel(new GridBagLayout());
         JPanel buttons = new JPanel();
-        buttons.setOpaque(false);
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.PAGE_AXIS));
+        buttons.setBounds(0,0, getWidth(), getHeight());
 
-        status = new JLabel("Not Running");
-        status.setFont(status.getFont().deriveFont(18f));
+
+
         startServiceButton = new JButton("Start");
-        initButtonSize(startServiceButton);
+        initButton(startServiceButton);
         startServiceButton.addActionListener(e -> startService());
 
         stopServiceButton = new JButton("Stop");
-        initButtonSize(stopServiceButton);
+        initButton(stopServiceButton);
         stopServiceButton.addActionListener(e -> stopService());
 
         JButton exitServiceButton = new JButton("Exit");
         exitServiceButton.addActionListener(e -> exitWindow());
-        initButtonSize(exitServiceButton);
+        initButton(exitServiceButton);
 
-        buttons.add(status);
         buttons.add(startServiceButton);
         buttons.add(stopServiceButton);
         buttons.add(exitServiceButton);
 
-        buttons.setAlignmentX(Component.CENTER_ALIGNMENT);
-        buttons.setAlignmentY(Component.CENTER_ALIGNMENT);
-        contentPane.add(buttons);
+        buttonsPanelContainer.add(buttons);
+
+        contentPane.add(status);
+        contentPane.add(buttonsPanelContainer);
 
         contentPane.setPreferredSize(getSize());
         setContentPane(contentPane);
