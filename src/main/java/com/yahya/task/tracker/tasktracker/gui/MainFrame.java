@@ -56,7 +56,7 @@ public class MainFrame extends JFrame {
     private void initTray() {
         if (SystemTray.isSupported()) {
             SystemTray tray = SystemTray.getSystemTray();
-            Image image = Toolkit.getDefaultToolkit().getImage("/trayIcon.ico");
+            BufferedImage bufferedImage = getImageResource("/images/icons/server.png");
             popupMenu = new PopupMenu();
 
             MenuItem startItem = new MenuItem("Start Server");
@@ -85,7 +85,8 @@ public class MainFrame extends JFrame {
             exitItem.addActionListener(e -> exitWindow());
             popupMenu.add(exitItem);
 
-            trayIcon = new TrayIcon(image, "Task Tracker Server", popupMenu);
+            trayIcon = new TrayIcon(bufferedImage, "Task Tracker Server", popupMenu);
+            trayIcon.setImageAutoSize(true);
             trayIcon.addActionListener(e -> showWindow());
 
             try {
@@ -112,7 +113,7 @@ public class MainFrame extends JFrame {
                 if (SystemTray.isSupported()) {
                     SystemTray.getSystemTray().remove(trayIcon);
                 }
-                dispose();
+                System.exit(0);
             }
 
             @Override
@@ -151,6 +152,20 @@ public class MainFrame extends JFrame {
         this.currentStatus = currentStatus;
         status.setText(currentStatus.displayStatus());
         trayIcon.setToolTip("Task Tracker Server - [" + currentStatus.getStatus() + "]");
+
+        ImageIcon imageIcon = null;
+        if (currentStatus == Status.RUNNING) {
+            imageIcon = new ImageIcon(getImageResource("/images/icons/running_server.png"));
+        } else if (currentStatus == Status.CLOSED) {
+            imageIcon = new ImageIcon(getImageResource("/images/icons/closed_server.png"));
+        } else {
+            imageIcon = new ImageIcon(getImageResource("/images/icons/server.png"));
+        }
+
+        if (trayIcon != null) {
+            trayIcon.setImage(imageIcon.getImage());
+        }
+        setIconImage(imageIcon.getImage());
     }
 
     void startService() {
@@ -180,7 +195,10 @@ public class MainFrame extends JFrame {
     }
 
     void init() {
-        ImagePanel contentPane = new ImagePanel(getImageResource("/images/bg (1).jpg"));
+        ImageIcon icon = new ImageIcon(getImageResource("/images/icons/server.png"));
+        setIconImage(icon.getImage());
+
+        ImagePanel contentPane = new ImagePanel();
         contentPane.setLayout(new GridBagLayout());
 
         JPanel buttons = new JPanel();
