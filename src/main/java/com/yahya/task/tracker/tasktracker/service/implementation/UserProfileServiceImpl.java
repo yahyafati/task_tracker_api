@@ -1,9 +1,9 @@
 package com.yahya.task.tracker.tasktracker.service.implementation;
 
-import com.yahya.task.tracker.tasktracker.dao.PersonDao;
+import com.yahya.task.tracker.tasktracker.dao.UserProfileDao;
 import com.yahya.task.tracker.tasktracker.dao.TaskPersonDao;
-import com.yahya.task.tracker.tasktracker.model.Person;
-import com.yahya.task.tracker.tasktracker.service.PersonService;
+import com.yahya.task.tracker.tasktracker.model.UserProfile;
+import com.yahya.task.tracker.tasktracker.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,30 +12,30 @@ import java.util.List;
 
 @Service
 @Transactional
-public class PersonServiceImpl implements PersonService {
+public class UserProfileServiceImpl implements UserProfileService {
 
-    private final PersonDao personDao;
+    private final UserProfileDao userProfileDao;
     private final TaskPersonDao taskPersonDao;
 
     @Autowired
-    public PersonServiceImpl(PersonDao personDao, TaskPersonDao taskPersonDao) {
-        this.personDao = personDao;
+    public UserProfileServiceImpl(UserProfileDao userProfileDao, TaskPersonDao taskPersonDao) {
+        this.userProfileDao = userProfileDao;
         this.taskPersonDao = taskPersonDao;
     }
 
     @Override
-    public Person findById(int id) {
-        return personDao.findById(id).orElseThrow();
+    public UserProfile findById(int id) {
+        return userProfileDao.findById(id).orElseThrow();
     }
 
     @Override
-    public Person save(Person item) {
-        return personDao.save(item);
+    public UserProfile save(UserProfile item) {
+        return userProfileDao.save(item);
     }
 
     @Override
-    public List<Person> findAll() {
-        return personDao.findAll();
+    public List<UserProfile> findAll() {
+        return userProfileDao.findAll();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class PersonServiceImpl implements PersonService {
 ////            taskPerson.setPerson(null);
 //            taskPersonDao.deleteById(taskPerson.getId());
 //        });
-        personDao.deleteById(id);
+        userProfileDao.deleteById(id);
         return true;
     }
 

@@ -11,20 +11,26 @@ import java.util.Set;
 @Getter @Setter @ToString
 @Builder
 @NoArgsConstructor @AllArgsConstructor
-public class Person {
+public class UserProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
-    @Builder.Default
-    private String email = "";
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phone;
+    private String profilePhotoURL;
 
+    @OneToOne(mappedBy = "userProfile")
+    private User user;
 
-//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,
-//            mappedBy = "person", fetch = FetchType.EAGER)
-    @OneToMany(orphanRemoval = true, mappedBy = "person", fetch = FetchType.EAGER)
+    @OneToMany(orphanRemoval = true, mappedBy = "userProfile", fetch = FetchType.EAGER)
     @JsonIgnore @ToString.Exclude @Builder.Default
     private Set<TaskPerson> taskPeople = new HashSet<>();
+
+    public String getFullName() {
+        return String.format("%s %s", firstName, lastName);
+    }
 
 }

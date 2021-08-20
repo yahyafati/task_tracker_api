@@ -17,12 +17,12 @@ public class TaskPerson {
     @JsonIgnore
     private Task task;
     @ManyToOne
-    private Person person;
+    private UserProfile userProfile;
     private boolean isLeader;
 
-    public TaskPerson(Task task, Person person, boolean isLeader) {
+    public TaskPerson(Task task, UserProfile userProfile, boolean isLeader) {
         this.task = task;
-        this.person = person;
+        this.userProfile = userProfile;
         this.isLeader = isLeader;
     }
 

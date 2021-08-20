@@ -1,15 +1,14 @@
 package com.yahya.task.tracker.tasktracker;
 
 import com.yahya.task.tracker.tasktracker.gui.MainFrame;
-import com.yahya.task.tracker.tasktracker.model.Person;
+import com.yahya.task.tracker.tasktracker.model.UserProfile;
 import com.yahya.task.tracker.tasktracker.model.Priority;
 import com.yahya.task.tracker.tasktracker.model.Status;
 import com.yahya.task.tracker.tasktracker.model.Task;
-import com.yahya.task.tracker.tasktracker.service.PersonService;
+import com.yahya.task.tracker.tasktracker.service.UserProfileService;
 import com.yahya.task.tracker.tasktracker.service.TaskService;
 import com.yahya.task.tracker.tasktracker.service.TrackService;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.ConfigurableBootstrapContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -22,9 +21,13 @@ import java.time.Month;
 public class TaskTrackerApplication {
 
     public static void main(String[] args) {
-//        ConfigurableApplicationContext ctx =
-//                SpringApplication.run(TaskTrackerApplication.class, args);
+        ConfigurableApplicationContext ctx =
+                SpringApplication.run(TaskTrackerApplication.class, args);
+        System.out.println("Application Started at http://localhost:4200");
+//        startFrame(args);
+    }
 
+    public static void startFrame(String[] args) {
         SwingUtilities.invokeLater(() -> {
             try {
                 for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -46,7 +49,7 @@ public class TaskTrackerApplication {
     }
 
 //    @Bean
-    public CommandLineRunner initializeDatabase(TaskService taskService, PersonService personService, TrackService trackService) {
+    public CommandLineRunner initializeDatabase(TaskService taskService, UserProfileService userProfileService, TrackService trackService) {
         return args -> {
             if (taskService.findAll().size() > 0) return;
 
@@ -78,39 +81,42 @@ public class TaskTrackerApplication {
                     .priority(Priority.HIGH)
                     .build();
 
-            Person hanan = Person.builder()
-                    .name("Hanan Fati")
+            UserProfile hanan = UserProfile.builder()
+                    .firstName("Hanan")
+                    .lastName("Fati")
                     .build();
 
-            Person mame = Person.builder()
-                    .name("Mame Fati")
+            UserProfile mame = UserProfile.builder()
+                    .firstName("Mame")
+                    .lastName("Fati")
                     .build();
 
-            Person ilham = Person.builder()
-                    .name("Ilham Fati")
+            UserProfile ilham = UserProfile.builder()
+                    .firstName("Ilham")
+                    .lastName("Fati")
                     .build();
 
-            Person munir = Person.builder()
-                    .name("Munir Fati")
+            UserProfile munir = UserProfile.builder()
+                    .firstName("Munir")
                     .build();
 
-            Person salim = Person.builder()
-                    .name("Salim")
+            UserProfile salim = UserProfile.builder()
+                    .firstName("Salim")
                     .build();
-            Person abuke = Person.builder()
-                    .name("Abuke")
+            UserProfile abuke = UserProfile.builder()
+                    .firstName("Abuke")
                     .build();
-            Person zakiya = Person.builder()
-                    .name("Zako")
+            UserProfile zakiya = UserProfile.builder()
+                    .firstName("Zako")
                     .build();
 
-            personService.save(hanan);
-            personService.save(mame);
-            personService.save(ilham);
-            personService.save(munir);
-            personService.save(salim);
-            personService.save(abuke);
-            personService.save(zakiya);
+            userProfileService.save(hanan);
+            userProfileService.save(mame);
+            userProfileService.save(ilham);
+            userProfileService.save(munir);
+            userProfileService.save(salim);
+            userProfileService.save(abuke);
+            userProfileService.save(zakiya);
 
 
             hananTask.addLeader(hanan);
