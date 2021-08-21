@@ -18,13 +18,11 @@ import java.util.Set;
 public class TaskController implements BasicRestControllerSkeleton<Task> {
 
     private final TaskService taskService;
-    private final TaskPersonService taskPersonService;
     private final TrackService trackService;
 
     @Autowired
-    public TaskController(TaskService taskService, TaskPersonService taskPersonService, TrackService trackService) {
+    public TaskController(TaskService taskService, TrackService trackService) {
         this.taskService = taskService;
-        this.taskPersonService = taskPersonService;
         this.trackService = trackService;
     }
 
@@ -75,9 +73,10 @@ public class TaskController implements BasicRestControllerSkeleton<Task> {
 
     @PostMapping("/{id}/persons")
     public TaskPerson getAssignees(@PathVariable Integer id, @RequestBody TaskPerson taskPerson) {
-        Task task = taskService.findById(id);
-        taskPerson.setTask(task);
-        return taskPersonService.save(taskPerson);
+//        Task task = taskService.findById(id);
+//        taskPerson.setTask(task);
+//        return taskPersonService.save(taskPerson);
+        return taskService.saveTaskPerson(id, taskPerson);
     }
 
     @PutMapping("/{task_id}/persons/{taskPerson_id}")
@@ -85,12 +84,12 @@ public class TaskController implements BasicRestControllerSkeleton<Task> {
                                      @PathVariable Integer taskPerson_id,
                                      @RequestBody TaskPerson updatedTaskPerson) {
         updatedTaskPerson.setId(taskPerson_id);
-        return taskPersonService.save(updatedTaskPerson);
+        return taskService.saveTaskPerson(task_id, updatedTaskPerson);
     }
 
     @DeleteMapping("/{task_id}/persons/{taskPerson_id}")
     public void removeAssignee(@PathVariable Integer task_id, @PathVariable Integer taskPerson_id) {
-        taskPersonService.deleteById(taskPerson_id);
+        taskService.deleteTaskPersonById(taskPerson_id);
     }
 
 

@@ -1,10 +1,10 @@
 package com.yahya.task.tracker.tasktracker.service.implementation;
 
 import com.yahya.task.tracker.tasktracker.dao.TaskDao;
-import com.yahya.task.tracker.tasktracker.dao.TaskPersonDao;
 import com.yahya.task.tracker.tasktracker.model.Task;
 import com.yahya.task.tracker.tasktracker.model.TaskPerson;
 import com.yahya.task.tracker.tasktracker.model.Track;
+import com.yahya.task.tracker.tasktracker.service.TaskPersonService;
 import com.yahya.task.tracker.tasktracker.service.TaskService;
 import com.yahya.task.tracker.tasktracker.service.TrackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +19,13 @@ import java.util.Set;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskDao taskDao;
-//    private final TaskPersonService taskPersonService;
-    private final TaskPersonDao taskPersonDao;
+    private final TaskPersonService taskPersonService;
     private final TrackService trackService;
 
     @Autowired
-    public TaskServiceImpl(TaskDao taskDao, TaskPersonDao taskPersonDao, TrackService trackService) {
+    public TaskServiceImpl(TaskDao taskDao, TaskPersonService taskPersonService, TrackService trackService) {
         this.taskDao = taskDao;
-        this.taskPersonDao = taskPersonDao;
-//        this.taskPersonService = taskPersonService;
+        this.taskPersonService = taskPersonService;
         this.trackService = trackService;
     }
 
@@ -42,12 +40,12 @@ public class TaskServiceImpl implements TaskService {
         Task savedItem = taskDao.save(item);
 
 
-        taskPersonDao.deleteAllByTaskId(savedItem.getId());
+        taskPersonService.deleteAllByTaskId(savedItem.getId());
 
         Task finalSavedItem = savedItem;
         item.getAssignees().forEach(taskPerson -> {
             taskPerson.setTask(finalSavedItem);
-            taskPersonDao.save(taskPerson);
+            taskPersonService.save(taskPerson);
         });
 
 
@@ -65,6 +63,17 @@ public class TaskServiceImpl implements TaskService {
 
         return savedItem;
     }
+
+    @Override
+    public TaskPerson saveTaskPerson(int taskId, TaskPerson taskPerson) {
+        return null;
+    }
+
+    @Override
+    public void deleteTaskPersonById(int taskPersonId) {
+
+    }
+
     @Override
     public List<Task> findAll() {
         return taskDao.findAll();

@@ -44,4 +44,9 @@ public class TaskPersonServiceImpl implements TaskPersonService {
         taskPersonDao.deleteById(id);
         return true;
     }
+
+    @Override
+    public void deleteAllByTaskId(int taskId) {
+        taskPersonDao.deleteAllByTaskId(taskId);
+    }
 }

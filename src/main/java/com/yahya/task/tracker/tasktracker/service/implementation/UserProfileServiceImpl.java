@@ -46,7 +46,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 //            taskPersonDao.delete(taskPerson);
 //        });
 //        List<TaskPerson> copyTaskPeople = taskPersonDao.findAllByPersonId(id);
-        taskPersonDao.deleteAllByPersonId(id);
+        taskPersonDao.deleteAllByUserProfileId(id);
 //        copyTaskPeople.forEach(taskPerson -> {
 ////            taskPerson.setPerson(null);
 //            taskPersonDao.deleteById(taskPerson.getId());
