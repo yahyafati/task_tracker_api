@@ -19,19 +19,19 @@ public class Authority implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(nullable = false, unique = true)
-    private String name;
+    private String authority;
 
     @Override
     public String getAuthority() {
-        return getName();
+        return authority;
     }
 
-    public Authority(String name) {
-        this.name = name;
+    public Authority(String authority) {
+        this.authority = authority;
     }
 
     public Authority(Permission permission) {
-        this.name = permission.getPermission();
+        this.authority = permission.getPermission();
     }
 
     @Override
@@ -39,11 +39,11 @@ public class Authority implements GrantedAuthority {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Authority authority = (Authority) o;
-        return Objects.equals(name, authority.name);
+        return Objects.equals(this.authority, authority.authority);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(authority);
     }
 }

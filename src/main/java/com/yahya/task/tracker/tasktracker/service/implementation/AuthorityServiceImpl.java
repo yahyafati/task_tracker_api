@@ -24,7 +24,7 @@ public class AuthorityServiceImpl implements AuthorityService {
 
     @Override
     public Authority save(Authority item) {
-        item.setName(item.getName().toUpperCase());
+        item.setAuthority(item.getAuthority().toUpperCase());
         return authorityDao.save(item);
     }
 
@@ -41,12 +41,12 @@ public class AuthorityServiceImpl implements AuthorityService {
 
     @Override
     public Authority findByName(String name) {
-        Optional<Authority> authority = authorityDao.findByName(name.toUpperCase());
+        Optional<Authority> authority = authorityDao.findByAuthority(name.toUpperCase());
         return authority.orElse(null);
     }
 
     @Override
     public void deleteByName(String name) {
-        authorityDao.deleteByName(name);
+        authorityDao.deleteByAuthority(name);
     }
 }

@@ -23,6 +23,7 @@ public class UserProfile {
     private String profilePhotoURL;
 
     @OneToOne(mappedBy = "userProfile")
+    @JsonIgnore @ToString.Exclude
     private User user;
 
     @OneToMany(orphanRemoval = true, mappedBy = "userProfile", fetch = FetchType.EAGER)

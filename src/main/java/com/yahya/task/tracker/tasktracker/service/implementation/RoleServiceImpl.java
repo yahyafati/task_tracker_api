@@ -30,7 +30,7 @@ public class RoleServiceImpl implements RoleService {
         item.setName(item.getName().toUpperCase());
         item.setAuthorities(
                 item.getAuthorities().stream()
-                        .map(authority -> authorityService.findByName(authority.getName()))
+                        .map(authority -> authorityService.findByName(authority.getAuthority()))
                         .collect(Collectors.toSet())
         );
         item.getAuthorities().forEach(System.out::println);

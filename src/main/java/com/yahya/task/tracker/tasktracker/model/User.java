@@ -18,7 +18,11 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(nullable = false, unique = true)
     private String username;
+
+    @Column(nullable = false)
+    @JsonIgnore @ToString.Exclude
     private String password;
 
     private boolean isAccountNonExpired = true;
@@ -27,7 +31,7 @@ public class User implements UserDetails {
     private boolean isEnabled = true;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
+    @JsonIgnore @ToString.Exclude
     private UserProfile userProfile;
 
     @ManyToOne

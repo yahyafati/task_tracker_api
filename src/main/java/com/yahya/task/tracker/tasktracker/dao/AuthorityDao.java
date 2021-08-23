@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface AuthorityDao extends JpaRepository<Authority, Integer> {
 
-    Optional<Authority> findByName(String name);
+    Optional<Authority> findByAuthority(String authority);
 
-    void deleteByName(String name);
+    void deleteByAuthority(String authority);
 }
