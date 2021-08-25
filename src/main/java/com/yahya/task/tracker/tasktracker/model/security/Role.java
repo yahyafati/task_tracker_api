@@ -1,6 +1,5 @@
 package com.yahya.task.tracker.tasktracker.model.security;
 
-import com.yahya.task.tracker.tasktracker.security.UserRole;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

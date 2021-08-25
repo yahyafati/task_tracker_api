@@ -1,7 +1,10 @@
 package com.yahya.task.tracker.tasktracker.helpers;
 
 
-import com.yahya.task.tracker.tasktracker.model.*;
+import com.yahya.task.tracker.tasktracker.model.Priority;
+import com.yahya.task.tracker.tasktracker.model.Status;
+import com.yahya.task.tracker.tasktracker.model.Task;
+import com.yahya.task.tracker.tasktracker.model.UserProfile;
 import com.yahya.task.tracker.tasktracker.model.security.Authority;
 import com.yahya.task.tracker.tasktracker.model.security.Role;
 import com.yahya.task.tracker.tasktracker.security.Permission;

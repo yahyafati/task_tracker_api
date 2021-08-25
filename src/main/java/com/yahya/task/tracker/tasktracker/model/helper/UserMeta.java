@@ -1,6 +1,5 @@
 package com.yahya.task.tracker.tasktracker.model.helper;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.yahya.task.tracker.tasktracker.model.User;
 import com.yahya.task.tracker.tasktracker.model.UserProfile;
 import lombok.AllArgsConstructor;

@@ -1,15 +1,11 @@
 package com.yahya.task.tracker.tasktracker.security.jwt;
 
 import com.google.common.net.HttpHeaders;
-import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-
-import javax.crypto.SecretKey;
 
 @Component
 @ConfigurationProperties(prefix = "application.jwt")
