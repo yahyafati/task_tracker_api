@@ -33,7 +33,6 @@ public class RoleServiceImpl implements RoleService {
                         .map(authority -> authorityService.findByName(authority.getAuthority()))
                         .collect(Collectors.toSet())
         );
-        item.getAuthorities().forEach(System.out::println);
         return roleDao.save(item);
     }
 

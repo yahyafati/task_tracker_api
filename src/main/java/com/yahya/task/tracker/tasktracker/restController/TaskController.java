@@ -47,11 +47,6 @@ public class TaskController implements BasicRestControllerSkeleton<Task> {
     @PutMapping("/{id}")
     public Task update(@PathVariable Integer id, @RequestBody Task updatedItem) {
         updatedItem.setId(id);
-
-//        Task oldItem = taskService.findById(id);
-//        oldItem.getAssignees().forEach(updatedItem::addAssignee);
-//        oldItem.getTracks().forEach(updatedItem::addTrack);
-
         return taskService.save(updatedItem);
     }
 
@@ -71,9 +66,6 @@ public class TaskController implements BasicRestControllerSkeleton<Task> {
 
     @PostMapping("/{id}/persons")
     public TaskPerson getAssignees(@PathVariable Integer id, @RequestBody TaskPerson taskPerson) {
-//        Task task = taskService.findById(id);
-//        taskPerson.setTask(task);
-//        return taskPersonService.save(taskPerson);
         return taskService.saveTaskPerson(id, taskPerson);
     }
 
