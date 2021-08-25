@@ -19,6 +19,7 @@ public class TaskPerson {
     @ManyToOne
     private UserProfile userProfile;
     private boolean isLeader;
+    private boolean hasVisited;
 
     public TaskPerson(Task task, UserProfile userProfile, boolean isLeader) {
         this.task = task;

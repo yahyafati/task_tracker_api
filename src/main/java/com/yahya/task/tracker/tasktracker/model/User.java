@@ -1,8 +1,11 @@
 package com.yahya.task.tracker.tasktracker.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.yahya.task.tracker.tasktracker.model.helper.UserMeta;
 import com.yahya.task.tracker.tasktracker.model.security.Role;
 import lombok.*;
+import org.checkerframework.common.value.qual.StringVal;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -38,6 +41,7 @@ public class User implements UserDetails {
     private Role role;
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return role.getAuthorities();
     }
@@ -47,6 +51,12 @@ public class User implements UserDetails {
         setAccountNonLocked(true);
         setEnabled(true);
         setCredentialsNonExpired(true);
+    }
+
+    public User(UserMeta userMeta) {
+        this.username = userMeta.getUsername();
+        this.password = userMeta.getPassword();
+        this.userProfile = new UserProfile(userMeta);
     }
 
 }

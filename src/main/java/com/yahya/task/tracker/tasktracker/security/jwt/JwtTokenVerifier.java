@@ -41,9 +41,10 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
         String authorization = request.getHeader(jwtConfig.getAuthorizationHeader());
         if (authorization == null || authorization.isEmpty() || !authorization.startsWith(jwtConfig.getTokenPrefix())) {
-//            filterChain.doFilter(request, response);
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            throw new IllegalStateException("No Token has been given.");
+            filterChain.doFilter(request, response);
+//            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+//            throw new IllegalStateException("No Token has been given.");
+            return;
         }
 
         String token = authorization.replace(jwtConfig.getTokenPrefix(), "");

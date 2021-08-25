@@ -1,6 +1,7 @@
 package com.yahya.task.tracker.tasktracker.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.yahya.task.tracker.tasktracker.model.helper.UserMeta;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,9 +27,19 @@ public class UserProfile {
     @JsonIgnore @ToString.Exclude
     private User user;
 
+    @ManyToOne
+    private Department department;
+
     @OneToMany(orphanRemoval = true, mappedBy = "userProfile", fetch = FetchType.EAGER)
     @JsonIgnore @ToString.Exclude @Builder.Default
     private Set<TaskPerson> taskPeople = new HashSet<>();
+
+    public UserProfile(UserMeta userMeta) {
+        this.firstName = userMeta.getFirstName();
+        this.lastName = userMeta.getLastName();
+        this.email = userMeta.getEmail();
+        this.phone = userMeta.getPhone();
+    }
 
     public String getFullName() {
         return String.format("%s %s", firstName, lastName);

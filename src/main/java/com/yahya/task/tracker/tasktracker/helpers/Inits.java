@@ -41,19 +41,19 @@ public class Inits {
                         roleService.save(role);
                     });
 
-            User yahya = User.builder()
-                    .username("yahya")
-                    .password(passwordEncoder.encode("12345678"))
-                    .build();
-            yahya.activate();
-            userService.save(yahya);
-
-            User munir = User.builder()
-                    .username("munir")
-                    .password(passwordEncoder.encode("12345678"))
-                    .build();
-            munir.activate();
-            userService.save(munir);
+//            User yahya = User.builder()
+//                    .username("yahya")
+//                    .password(passwordEncoder.encode("12345678"))
+//                    .build();
+//            yahya.activate();
+//            userService.save(yahya);
+//
+//            User munir = User.builder()
+//                    .username("munir")
+//                    .password(passwordEncoder.encode("12345678"))
+//                    .build();
+//            munir.activate();
+//            userService.save(munir);
         };
     }
 

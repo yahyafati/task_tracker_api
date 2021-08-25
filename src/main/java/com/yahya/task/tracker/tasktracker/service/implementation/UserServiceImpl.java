@@ -2,11 +2,13 @@ package com.yahya.task.tracker.tasktracker.service.implementation;
 
 import com.yahya.task.tracker.tasktracker.dao.UserDao;
 import com.yahya.task.tracker.tasktracker.model.User;
-import com.yahya.task.tracker.tasktracker.model.UserProfile;
+import com.yahya.task.tracker.tasktracker.model.helper.UserMeta;
 import com.yahya.task.tracker.tasktracker.service.RoleService;
 import com.yahya.task.tracker.tasktracker.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +18,13 @@ public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
     private final RoleService roleService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserDao userDao, RoleService roleService) {
+    @Autowired
+    public UserServiceImpl(UserDao userDao, RoleService roleService, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
         this.roleService = roleService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -30,13 +35,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User item) {
         if (item.getId() == 0) {
-            if (item.getUserProfile() == null) {
-                UserProfile userProfile = new UserProfile();
-                item.setUserProfile(userProfile);
-            }
             if (item.getRole() == null) {
                 item.setRole(roleService.findByName("USER"));
             }
+            final String encodedPassword = passwordEncoder.encode(item.getPassword());
+            item.setPassword(encodedPassword);
+        } else {
+            User oldUser = findById(item.getId());
+            item.setPassword(oldUser.getPassword());
         }
         return userDao.save(item);
     }
@@ -55,5 +61,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userDao.findUserByUsername(username).orElseThrow();
+    }
+
+    @Override
+    public User saveUserMeta(UserMeta userMeta) {
+        User user = new User(userMeta);
+        return save(user);
     }
 }
