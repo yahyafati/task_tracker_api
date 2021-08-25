@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/taskperson")
-@CrossOrigin("*")
 public class TaskPersonController implements BasicRestControllerSkeleton<TaskPerson>{
 
     private final TaskPersonService taskPersonService;

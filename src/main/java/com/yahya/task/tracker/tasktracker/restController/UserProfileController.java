@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/profile")
-@CrossOrigin("*")
 public class UserProfileController implements BasicRestControllerSkeleton<UserProfile> {
 
     private final UserProfileService userProfileService;

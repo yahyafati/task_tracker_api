@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/track")
-@CrossOrigin("*")
 public class TrackController implements BasicRestControllerSkeleton<Track> {
 
     private final TrackService trackService;

@@ -14,7 +14,6 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/task")
-@CrossOrigin("*")
 public class TaskController implements BasicRestControllerSkeleton<Task> {
 
     private final TaskService taskService;
