@@ -1,7 +1,7 @@
 package com.yahya.task.tracker.tasktracker.restController;
 
-import com.yahya.task.tracker.tasktracker.model.UserProfile;
-import com.yahya.task.tracker.tasktracker.service.UserProfileService;
+import com.yahya.task.tracker.tasktracker.model.Profile;
+import com.yahya.task.tracker.tasktracker.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,45 +9,45 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/profile")
-public class UserProfileController implements BasicRestControllerSkeleton<UserProfile> {
+public class UserProfileController implements BasicRestControllerSkeleton<Profile> {
 
-    private final UserProfileService userProfileService;
+    private final ProfileService profileService;
 
     @Autowired
-    public UserProfileController(UserProfileService userProfileService) {
-        this.userProfileService = userProfileService;
+    public UserProfileController(ProfileService profileService) {
+        this.profileService = profileService;
     }
 
     @Override
     @GetMapping("")
-    public List<UserProfile> getAll() {
-        return userProfileService.findAll();
+    public List<Profile> getAll() {
+        return profileService.findAll();
     }
 
     @Override
     @GetMapping("/{id}")
-    public UserProfile get(@PathVariable Integer id) {
-        return userProfileService.findById(id);
+    public Profile get(@PathVariable Integer id) {
+        return profileService.findById(id);
     }
 
     @Override
     @PostMapping("")
-    public UserProfile add(@RequestBody UserProfile item) {
+    public Profile add(@RequestBody Profile item) {
         item.setId(0);
-        return userProfileService.save(item);
+        return profileService.save(item);
     }
 
     @Override
     @PutMapping("/{id}")
-    public UserProfile update(@PathVariable Integer id, @RequestBody UserProfile updatedItem) {
+    public Profile update(@PathVariable Integer id, @RequestBody Profile updatedItem) {
         updatedItem.setId(id);
-        return userProfileService.save(updatedItem);
+        return profileService.save(updatedItem);
     }
 
     @Override
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
-        userProfileService.deleteById(id);
+        profileService.deleteById(id);
     }
 
 //    Custom Controllers

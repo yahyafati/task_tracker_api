@@ -17,13 +17,13 @@ public class TaskPerson {
     @JsonIgnore
     private Task task;
     @ManyToOne
-    private UserProfile userProfile;
+    private Profile profile;
     private boolean isLeader;
     private boolean hasVisited;
 
-    public TaskPerson(Task task, UserProfile userProfile, boolean isLeader) {
+    public TaskPerson(Task task, Profile profile, boolean isLeader) {
         this.task = task;
-        this.userProfile = userProfile;
+        this.profile = profile;
         this.isLeader = isLeader;
     }
 

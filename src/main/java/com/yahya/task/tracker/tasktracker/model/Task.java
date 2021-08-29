@@ -32,7 +32,7 @@ public class Task {
     private Priority priority;
 
     @ManyToOne
-    private UserProfile taskOwner;
+    private Profile taskOwner;
 
     @OneToMany(orphanRemoval = true, mappedBy = "task", fetch = FetchType.EAGER)
     @ToString.Exclude @Builder.Default
@@ -42,26 +42,26 @@ public class Task {
     @JsonIgnore @ToString.Exclude @Builder.Default
     private Set<Track> tracks = new HashSet<>();
 
-    private void addAssignee(UserProfile userProfile, boolean leader) {
-        if (assignees.stream().anyMatch(taskPerson1 -> taskPerson1.getUserProfile().getId() == userProfile.getId()))
+    private void addAssignee(Profile profile, boolean leader) {
+        if (assignees.stream().anyMatch(taskPerson1 -> taskPerson1.getProfile().getId() == profile.getId()))
             return;
-        TaskPerson taskPerson = new TaskPerson(this, userProfile, leader);
+        TaskPerson taskPerson = new TaskPerson(this, profile, leader);
         assignees.add(taskPerson);
     }
 
     public void addAssignee(TaskPerson taskPerson) {
-        if (assignees.stream().anyMatch(taskPerson1 -> taskPerson1.getUserProfile().getId() == taskPerson.getUserProfile().getId()))
+        if (assignees.stream().anyMatch(taskPerson1 -> taskPerson1.getProfile().getId() == taskPerson.getProfile().getId()))
             return;
         taskPerson.setTask(this);
         assignees.add(taskPerson);
     }
 
-    public void addAssignee(UserProfile userProfile) {
-        addAssignee(userProfile, false);
+    public void addAssignee(Profile profile) {
+        addAssignee(profile, false);
     }
 
-    public void addLeader(UserProfile userProfile) {
-        addAssignee(userProfile, true);
+    public void addLeader(Profile profile) {
+        addAssignee(profile, true);
     }
 
     public void addTrack(Track track) {

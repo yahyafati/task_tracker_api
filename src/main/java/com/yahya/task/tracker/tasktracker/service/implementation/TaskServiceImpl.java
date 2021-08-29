@@ -75,6 +75,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public boolean exists(Integer id) {
+        return taskDao.existsById(id);
+    }
+
+    @Override
     public List<Task> findAll() {
         return taskDao.findAll();
     }

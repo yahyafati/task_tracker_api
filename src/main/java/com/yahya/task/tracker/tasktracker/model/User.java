@@ -33,7 +33,7 @@ public class User implements UserDetails {
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore @ToString.Exclude
-    private UserProfile userProfile;
+    private Profile profile;
 
     @ManyToOne
     private Role role;
@@ -54,7 +54,7 @@ public class User implements UserDetails {
     public User(UserMeta userMeta) {
         this.username = userMeta.getUsername();
         this.password = userMeta.getPassword();
-        this.userProfile = new UserProfile(userMeta);
+        this.profile = new Profile(userMeta);
     }
 
 }

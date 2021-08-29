@@ -19,4 +19,6 @@ public interface TaskService extends BasicServiceSkeleton<Task> {
 
     TaskPerson saveTaskPerson(int taskId, TaskPerson taskPerson);
     void deleteTaskPersonById(int taskPersonId);
+
+    boolean exists(Integer id);
 }

@@ -2,9 +2,9 @@ package com.yahya.task.tracker.tasktracker.service.implementation;
 
 import com.yahya.task.tracker.tasktracker.dao.TaskPersonDao;
 import com.yahya.task.tracker.tasktracker.model.TaskPerson;
-import com.yahya.task.tracker.tasktracker.model.UserProfile;
+import com.yahya.task.tracker.tasktracker.model.Profile;
 import com.yahya.task.tracker.tasktracker.service.TaskPersonService;
-import com.yahya.task.tracker.tasktracker.service.UserProfileService;
+import com.yahya.task.tracker.tasktracker.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +14,12 @@ import java.util.List;
 public class TaskPersonServiceImpl implements TaskPersonService {
 
     private final TaskPersonDao taskPersonDao;
-    private final UserProfileService userProfileService;
+    private final ProfileService profileService;
 
     @Autowired
-    public TaskPersonServiceImpl(TaskPersonDao taskPersonDao, UserProfileService userProfileService) {
+    public TaskPersonServiceImpl(TaskPersonDao taskPersonDao, ProfileService profileService) {
         this.taskPersonDao = taskPersonDao;
-        this.userProfileService = userProfileService;
+        this.profileService = profileService;
     }
 
     @Override
@@ -29,8 +29,8 @@ public class TaskPersonServiceImpl implements TaskPersonService {
 
     @Override
     public TaskPerson save(TaskPerson item) {
-        UserProfile userProfile = item.getUserProfile();
-        item.setUserProfile(userProfileService.findById(userProfile.getId()));
+        Profile profile = item.getProfile();
+        item.setProfile(profileService.findById(profile.getId()));
         return taskPersonDao.save(item);
     }
 

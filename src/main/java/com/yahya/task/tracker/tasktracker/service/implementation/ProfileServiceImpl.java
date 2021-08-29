@@ -1,9 +1,9 @@
 package com.yahya.task.tracker.tasktracker.service.implementation;
 
 import com.yahya.task.tracker.tasktracker.dao.TaskPersonDao;
-import com.yahya.task.tracker.tasktracker.dao.UserProfileDao;
-import com.yahya.task.tracker.tasktracker.model.UserProfile;
-import com.yahya.task.tracker.tasktracker.service.UserProfileService;
+import com.yahya.task.tracker.tasktracker.dao.ProfileDao;
+import com.yahya.task.tracker.tasktracker.model.Profile;
+import com.yahya.task.tracker.tasktracker.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,30 +12,30 @@ import java.util.List;
 
 @Service
 @Transactional
-public class UserProfileServiceImpl implements UserProfileService {
+public class ProfileServiceImpl implements ProfileService {
 
-    private final UserProfileDao userProfileDao;
+    private final ProfileDao profileDao;
     private final TaskPersonDao taskPersonDao;
 
     @Autowired
-    public UserProfileServiceImpl(UserProfileDao userProfileDao, TaskPersonDao taskPersonDao) {
-        this.userProfileDao = userProfileDao;
+    public ProfileServiceImpl(ProfileDao profileDao, TaskPersonDao taskPersonDao) {
+        this.profileDao = profileDao;
         this.taskPersonDao = taskPersonDao;
     }
 
     @Override
-    public UserProfile findById(int id) {
-        return userProfileDao.findById(id).orElseThrow();
+    public Profile findById(int id) {
+        return profileDao.findById(id).orElseThrow();
     }
 
     @Override
-    public UserProfile save(UserProfile item) {
-        return userProfileDao.save(item);
+    public Profile save(Profile item) {
+        return profileDao.save(item);
     }
 
     @Override
-    public List<UserProfile> findAll() {
-        return userProfileDao.findAll();
+    public List<Profile> findAll() {
+        return profileDao.findAll();
     }
 
     @Override
@@ -46,12 +46,12 @@ public class UserProfileServiceImpl implements UserProfileService {
 //            taskPersonDao.delete(taskPerson);
 //        });
 //        List<TaskPerson> copyTaskPeople = taskPersonDao.findAllByPersonId(id);
-        taskPersonDao.deleteAllByUserProfileId(id);
+        taskPersonDao.deleteAllByProfileId(id);
 //        copyTaskPeople.forEach(taskPerson -> {
 ////            taskPerson.setPerson(null);
 //            taskPersonDao.deleteById(taskPerson.getId());
 //        });
-        userProfileDao.deleteById(id);
+        profileDao.deleteById(id);
         return true;
     }
 

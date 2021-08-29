@@ -4,7 +4,7 @@ package com.yahya.task.tracker.tasktracker.helpers;
 import com.yahya.task.tracker.tasktracker.model.Priority;
 import com.yahya.task.tracker.tasktracker.model.Status;
 import com.yahya.task.tracker.tasktracker.model.Task;
-import com.yahya.task.tracker.tasktracker.model.UserProfile;
+import com.yahya.task.tracker.tasktracker.model.Profile;
 import com.yahya.task.tracker.tasktracker.model.security.Authority;
 import com.yahya.task.tracker.tasktracker.model.security.Role;
 import com.yahya.task.tracker.tasktracker.security.Permission;
@@ -61,7 +61,7 @@ public class Inits {
     }
 
 //    @Bean
-    public CommandLineRunner initializeDatabase(TaskService taskService, UserProfileService userProfileService, TrackService trackService) {
+    public CommandLineRunner initializeDatabase(TaskService taskService, ProfileService profileService, TrackService trackService) {
         return args -> {
             if (taskService.findAll().size() > 0) return;
 
@@ -93,42 +93,42 @@ public class Inits {
                     .priority(Priority.HIGH)
                     .build();
 
-            UserProfile hanan = UserProfile.builder()
+            Profile hanan = Profile.builder()
                     .firstName("Hanan")
                     .lastName("Fati")
                     .build();
 
-            UserProfile mame = UserProfile.builder()
+            Profile mame = Profile.builder()
                     .firstName("Mame")
                     .lastName("Fati")
                     .build();
 
-            UserProfile ilham = UserProfile.builder()
+            Profile ilham = Profile.builder()
                     .firstName("Ilham")
                     .lastName("Fati")
                     .build();
 
-            UserProfile munir = UserProfile.builder()
+            Profile munir = Profile.builder()
                     .firstName("Munir")
                     .build();
 
-            UserProfile salim = UserProfile.builder()
+            Profile salim = Profile.builder()
                     .firstName("Salim")
                     .build();
-            UserProfile abuke = UserProfile.builder()
+            Profile abuke = Profile.builder()
                     .firstName("Abuke")
                     .build();
-            UserProfile zakiya = UserProfile.builder()
+            Profile zakiya = Profile.builder()
                     .firstName("Zako")
                     .build();
 
-            userProfileService.save(hanan);
-            userProfileService.save(mame);
-            userProfileService.save(ilham);
-            userProfileService.save(munir);
-            userProfileService.save(salim);
-            userProfileService.save(abuke);
-            userProfileService.save(zakiya);
+            profileService.save(hanan);
+            profileService.save(mame);
+            profileService.save(ilham);
+            profileService.save(munir);
+            profileService.save(salim);
+            profileService.save(abuke);
+            profileService.save(zakiya);
 
 
             hananTask.addLeader(hanan);

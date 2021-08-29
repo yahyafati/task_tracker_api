@@ -1,7 +1,7 @@
 package com.yahya.task.tracker.tasktracker.model.helper;
 
 import com.yahya.task.tracker.tasktracker.model.User;
-import com.yahya.task.tracker.tasktracker.model.UserProfile;
+import com.yahya.task.tracker.tasktracker.model.Profile;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,12 +21,12 @@ public class UserMeta {
     public UserMeta(User user) {
         this.username = user.getUsername();
 
-        final UserProfile userProfile = user.getUserProfile();
-        if (userProfile != null) {
-            this.firstName = userProfile.getFirstName();
-            this.lastName = userProfile.getLastName();
-            this.email = userProfile.getEmail();
-            this.phone = userProfile.getPhone();
+        final Profile profile = user.getProfile();
+        if (profile != null) {
+            this.firstName = profile.getFirstName();
+            this.lastName = profile.getLastName();
+            this.email = profile.getEmail();
+            this.phone = profile.getPhone();
         }
     }
 

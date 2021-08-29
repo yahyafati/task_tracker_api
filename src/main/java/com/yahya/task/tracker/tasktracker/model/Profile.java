@@ -12,7 +12,7 @@ import java.util.Set;
 @Getter @Setter @ToString
 @Builder
 @NoArgsConstructor @AllArgsConstructor
-public class UserProfile {
+public class Profile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,18 +23,18 @@ public class UserProfile {
     private String phone;
     private String profilePhotoURL;
 
-    @OneToOne(mappedBy = "userProfile")
+    @OneToOne(mappedBy = "profile")
     @JsonIgnore @ToString.Exclude
     private User user;
 
     @ManyToOne
     private Department department;
 
-    @OneToMany(orphanRemoval = true, mappedBy = "userProfile", fetch = FetchType.EAGER)
+    @OneToMany(orphanRemoval = true, mappedBy = "profile", fetch = FetchType.EAGER)
     @JsonIgnore @ToString.Exclude @Builder.Default
     private Set<TaskPerson> taskPeople = new HashSet<>();
 
-    public UserProfile(UserMeta userMeta) {
+    public Profile(UserMeta userMeta) {
         this.firstName = userMeta.getFirstName();
         this.lastName = userMeta.getLastName();
         this.email = userMeta.getEmail();

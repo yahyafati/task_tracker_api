@@ -24,6 +24,11 @@ public class TaskController implements BasicRestControllerSkeleton<Task> {
         this.trackService = trackService;
     }
 
+    @GetMapping(value = "/exists/{id}")
+    public boolean exists(@PathVariable Integer id) {
+        return taskService.exists(id);
+    }
+
     @Override
     @GetMapping("")
     public List<Task> getAll() {
