@@ -37,9 +37,8 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional
     public Task save(Task item) {
+        item.getAssignees().forEach(taskPerson -> taskPerson.setId(0));
         Task savedItem = taskDao.save(item);
-
-
         taskPersonService.deleteAllByTaskId(savedItem.getId());
 
         Task finalSavedItem = savedItem;
