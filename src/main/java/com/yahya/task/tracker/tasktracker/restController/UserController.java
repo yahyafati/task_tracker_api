@@ -23,6 +23,12 @@ public class UserController implements BasicRestControllerSkeleton<User>{
         return userService.findAll();
     }
 
+
+    @GetMapping("/meta/{username}")
+    public UserMeta getMeta(@PathVariable String username) {
+        return userService.findUserMetaByUsername(username);
+    }
+
     @Override
     @GetMapping("/{id}")
     public User get(@PathVariable Integer id) {

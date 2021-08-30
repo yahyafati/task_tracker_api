@@ -1,5 +1,6 @@
 package com.yahya.task.tracker.tasktracker.model.security;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class Role {
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<Authority> authorities = new HashSet<>();
 
     public Role(String name) {

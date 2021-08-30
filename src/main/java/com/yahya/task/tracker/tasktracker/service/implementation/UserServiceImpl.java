@@ -60,6 +60,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return findByUsername(username);
+    }
+
+    @Override
+    public User findByUsername(String username) {
         return userDao.findUserByUsername(username).orElseThrow();
     }
 
@@ -67,5 +72,10 @@ public class UserServiceImpl implements UserService {
     public User saveUserMeta(UserMeta userMeta) {
         User user = new User(userMeta);
         return save(user);
+    }
+
+    @Override
+    public UserMeta findUserMetaByUsername(String username) {
+        return new UserMeta(findByUsername(username));
     }
 }
