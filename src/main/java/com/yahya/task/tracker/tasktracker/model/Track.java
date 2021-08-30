@@ -1,5 +1,7 @@
 package com.yahya.task.tracker.tasktracker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.yahya.task.tracker.tasktracker.model.helper.UserMeta;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,11 +26,12 @@ public class Track {
     private LocalDate date;
     @ManyToOne
     private Task task;
+    @ManyToOne
+    @JsonIgnore
+    private User owner;
 
     public Track(String title, String description, LocalDate date) {
-        this.title = title;
-        this.description = description;
-        this.date = date;
+        this(title, description,date, null);
     }
 
     public Track(String title, String description, LocalDate date, Task task) {
@@ -36,5 +39,9 @@ public class Track {
         this.description = description;
         this.date = date;
         this.task = task;
+    }
+
+    public UserMeta getUserMeta() {
+        return new UserMeta(owner);
     }
 }
