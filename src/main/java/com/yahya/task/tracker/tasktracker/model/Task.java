@@ -32,7 +32,7 @@ public class Task {
     private Priority priority;
 
     @ManyToOne
-    private Profile taskOwner;
+    private User owner;
 
     @OneToMany(orphanRemoval = true, mappedBy = "task", fetch = FetchType.EAGER)
     @ToString.Exclude @Builder.Default

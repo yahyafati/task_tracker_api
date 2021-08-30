@@ -139,10 +139,10 @@ public class Inits {
             allTask.addAssignee(mame);
             allTask.addAssignee(ilham);
 
-            taskService.saveNew(hananTask);
-            taskService.saveNew(ilhamTask);
-            taskService.saveNew(mameTask);
-            taskService.saveNew(allTask);
+//            taskService.saveNew(hananTask);
+//            taskService.saveNew(ilhamTask);
+//            taskService.saveNew(mameTask);
+//            taskService.saveNew(allTask);
 
             System.out.println("\n\nInitiated\n\n");
         };

@@ -5,6 +5,7 @@ import com.yahya.task.tracker.tasktracker.model.security.Authority;
 import io.jsonwebtoken.*;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -73,7 +74,8 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (JwtException ex) {
-            throw new IllegalStateException(String.format("Token %s can not be truest", token));
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//            throw new AccessDeniedException(String.format("Token %s can not be truest", token));
         }
         filterChain.doFilter(request, response);
     }

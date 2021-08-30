@@ -45,4 +45,9 @@ public class Profile {
         return String.format("%s %s", firstName, lastName);
     }
 
+    @Transient
+    public String getUsername() {
+        return user.getUsername();
+    }
+
 }
