@@ -27,8 +27,8 @@ public class Profile {
     @JsonIgnore @ToString.Exclude
     private User user;
 
-    @ManyToOne
-    private Department department;
+    @OneToOne(orphanRemoval = true, mappedBy = "profile")
+    private DepartmentProfile departmentProfile;
 
     @OneToMany(orphanRemoval = true, mappedBy = "profile", fetch = FetchType.EAGER)
     @JsonIgnore @ToString.Exclude @Builder.Default
