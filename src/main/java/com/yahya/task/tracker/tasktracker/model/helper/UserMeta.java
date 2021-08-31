@@ -2,6 +2,7 @@ package com.yahya.task.tracker.tasktracker.model.helper;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.yahya.task.tracker.tasktracker.model.Department;
+import com.yahya.task.tracker.tasktracker.model.DepartmentProfile;
 import com.yahya.task.tracker.tasktracker.model.User;
 import com.yahya.task.tracker.tasktracker.model.Profile;
 import com.yahya.task.tracker.tasktracker.model.security.Role;
@@ -20,7 +21,7 @@ public class UserMeta {
     private String lastName;
     private String email;
     private String phone;
-    private Department department;
+    private DepartmentProfile departmentProfile;
     private Role role;
 
     public UserMeta(User user) {
@@ -28,7 +29,7 @@ public class UserMeta {
         this.role = user.getRole();
         final Profile profile = user.getProfile();
         if (profile != null) {
-            this.department = profile.getDepartment();
+            this.departmentProfile = profile.getDepartmentProfile();
             this.firstName = profile.getFirstName();
             this.lastName = profile.getLastName();
             this.email = profile.getEmail();
