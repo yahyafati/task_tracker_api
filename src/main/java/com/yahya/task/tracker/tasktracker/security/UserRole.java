@@ -17,7 +17,8 @@ public enum UserRole {
         ),
     ADMIN(new HashSet<>(
             Arrays.stream(Permission.values()).collect(Collectors.toSet())
-    ));
+    )),
+    SUPER_ADMIN(new HashSet<>());
 
     private final Set<Permission> permissions;
 

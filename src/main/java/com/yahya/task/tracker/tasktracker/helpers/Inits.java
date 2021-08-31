@@ -1,10 +1,7 @@
 package com.yahya.task.tracker.tasktracker.helpers;
 
 
-import com.yahya.task.tracker.tasktracker.model.Priority;
-import com.yahya.task.tracker.tasktracker.model.Status;
-import com.yahya.task.tracker.tasktracker.model.Task;
-import com.yahya.task.tracker.tasktracker.model.Profile;
+import com.yahya.task.tracker.tasktracker.model.*;
 import com.yahya.task.tracker.tasktracker.model.security.Authority;
 import com.yahya.task.tracker.tasktracker.model.security.Role;
 import com.yahya.task.tracker.tasktracker.security.Permission;
@@ -23,7 +20,7 @@ import java.util.Arrays;
 public class Inits {
 
     @Bean
-    public CommandLineRunner initializeUsers(UserService userService, PasswordEncoder passwordEncoder,
+    public CommandLineRunner initializeRoles(UserService userService, PasswordEncoder passwordEncoder,
                                              AuthorityService authorityService, RoleService roleService) {
         return args -> {
             if (authorityService.findAll().size() > 0) {
@@ -43,20 +40,28 @@ public class Inits {
                         });
                         roleService.save(role);
                     });
+        };
+    }
 
-//            User yahya = User.builder()
-//                    .username("yahya")
-//                    .password(passwordEncoder.encode("12345678"))
-//                    .build();
-//            yahya.activate();
-//            userService.save(yahya);
-//
-//            User munir = User.builder()
-//                    .username("munir")
-//                    .password(passwordEncoder.encode("12345678"))
-//                    .build();
-//            munir.activate();
-//            userService.save(munir);
+    @Bean
+    public CommandLineRunner initializeSuperAdmin(UserService userService,
+                                                  RoleService roleService) {
+//        TODO Change this to value in properties file instead of hardcoding it
+
+//        TODO Change this ugly code to more fitting code. Return null on non existence from all services
+        return args -> {
+            try {
+                userService.findByUsername("superadmin");
+            } catch (Exception e) {
+                e.printStackTrace();
+                User superAdmin = User.builder()
+                        .username("superadmin")
+                        .password("superadmin")
+                        .role(roleService.findByName("SUPER_ADMIN"))
+                        .build();
+                superAdmin.activate();
+                userService.save(superAdmin);
+            }
         };
     }
 
