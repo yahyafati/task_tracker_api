@@ -21,15 +21,19 @@ public class UserMeta {
     private String lastName;
     private String email;
     private String phone;
-    private DepartmentProfile departmentProfile;
+    private Department department;
     private Role role;
+    private String departmentTitle;
 
     public UserMeta(User user) {
         this.username = user.getUsername();
         this.role = user.getRole();
         final Profile profile = user.getProfile();
         if (profile != null) {
-            this.departmentProfile = profile.getDepartmentProfile();
+            if (profile.getDepartmentProfile() != null) {
+                this.department = profile.getDepartmentProfile().getDepartment();
+                this.departmentTitle = profile.getDepartmentProfile().getTitle();
+            }
             this.firstName = profile.getFirstName();
             this.lastName = profile.getLastName();
             this.email = profile.getEmail();
