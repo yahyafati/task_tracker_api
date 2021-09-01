@@ -27,7 +27,7 @@ public class Profile {
     @JsonIgnore @ToString.Exclude
     private User user;
 
-    @OneToOne(orphanRemoval = true, mappedBy = "profile")
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "profile")
     private DepartmentProfile departmentProfile;
 
     @OneToMany(orphanRemoval = true, mappedBy = "profile", fetch = FetchType.EAGER)
@@ -39,6 +39,7 @@ public class Profile {
         this.lastName = userMeta.getLastName();
         this.email = userMeta.getEmail();
         this.phone = userMeta.getPhone();
+        this.departmentProfile = new DepartmentProfile(userMeta.getDepartmentTitle(), userMeta.getDepartment(), this);
     }
 
     public String getFullName() {
