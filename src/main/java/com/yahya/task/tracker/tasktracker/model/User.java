@@ -54,6 +54,7 @@ public class User implements UserDetails {
     public User(UserMeta userMeta) {
         this.username = userMeta.getUsername();
         this.password = userMeta.getPassword();
+        this.role = userMeta.getRole();
         this.profile = new Profile(userMeta);
     }
 

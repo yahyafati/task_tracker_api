@@ -53,7 +53,7 @@ public class Inits {
             try {
                 userService.findByUsername("superadmin");
             } catch (Exception e) {
-                e.printStackTrace();
+                System.err.println("No Super-Admin Found. Creating a new one.");
                 User superAdmin = User.builder()
                         .username("superadmin")
                         .password("superadmin")
