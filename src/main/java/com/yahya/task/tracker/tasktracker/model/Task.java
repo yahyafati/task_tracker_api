@@ -36,6 +36,7 @@ public class Task {
     private Priority priority;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private User owner;
 
     @OneToMany(orphanRemoval = true, mappedBy = "task", fetch = FetchType.EAGER)
@@ -56,12 +57,12 @@ public class Task {
         assignees.add(taskPerson);
     }
 
-    public void addAssignee(TaskPerson taskPerson) {
-        if (assignees.stream().anyMatch(taskPerson1 -> taskPerson1.getProfile().getId() == taskPerson.getProfile().getId()))
-            return;
-        taskPerson.setTask(this);
-        assignees.add(taskPerson);
-    }
+//    public void addAssignee(TaskPerson taskPerson) {
+//        if (assignees.stream().anyMatch(taskPerson1 -> taskPerson1.getProfile().getId() == taskPerson.getProfile().getId()))
+//            return;
+//        taskPerson.setTask(this);
+//        assignees.add(taskPerson);
+//    }
 
     public void addAssignee(Profile profile) {
         addAssignee(profile, false);
@@ -71,9 +72,13 @@ public class Task {
         addAssignee(profile, true);
     }
 
-    public void addTrack(Track track) {
-        track.setTask(this);
-        tracks.add(track);
+//    public void addTrack(Track track) {
+//        track.setTask(this);
+//        tracks.add(track);
+//    }
+
+    private String getOwnerName() {
+        return getOwner().getFullName();
     }
 
 }

@@ -68,4 +68,10 @@ public class User implements UserDetails {
         this.profile = new Profile(userMeta);
     }
 
+    public String getFullName() {
+        if (profile != null) {
+            return profile.getFullName();
+        }
+        return null;
+    }
 }
