@@ -2,6 +2,7 @@ package com.yahya.task.tracker.tasktracker.restController;
 
 import com.yahya.task.tracker.tasktracker.model.User;
 import com.yahya.task.tracker.tasktracker.model.helper.UserMeta;
+import com.yahya.task.tracker.tasktracker.model.security.Role;
 import com.yahya.task.tracker.tasktracker.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,12 +59,12 @@ public class UserController implements BasicRestControllerSkeleton<User>{
     }
 
 
-    @PatchMapping("/disable/{username}")
+    @PatchMapping("/deactivate/{username}")
     public boolean deactivateUser(@PathVariable String username) {
         return userService.deactivateUser(username);
     }
 
-    @PatchMapping("/enable/{username}")
+    @PatchMapping("/activate/{username}")
     public boolean activateUser(@PathVariable String username) {
         return userService.activateUser(username);
     }
@@ -71,5 +72,10 @@ public class UserController implements BasicRestControllerSkeleton<User>{
     @GetMapping("/exists/{username}")
     public boolean existsByUsername(@PathVariable String username) {
         return userService.existsByUsername(username);
+    }
+
+    @PatchMapping(value = "/changeRole/{username}")
+    public Role changeRole(@PathVariable String username, @RequestParam String roleName) {
+        return userService.changeRole(username, roleName);
     }
 }

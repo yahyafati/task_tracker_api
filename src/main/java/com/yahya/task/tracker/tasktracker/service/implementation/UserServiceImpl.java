@@ -3,6 +3,7 @@ package com.yahya.task.tracker.tasktracker.service.implementation;
 import com.yahya.task.tracker.tasktracker.dao.UserDao;
 import com.yahya.task.tracker.tasktracker.model.User;
 import com.yahya.task.tracker.tasktracker.model.helper.UserMeta;
+import com.yahya.task.tracker.tasktracker.model.security.Role;
 import com.yahya.task.tracker.tasktracker.service.RoleService;
 import com.yahya.task.tracker.tasktracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,5 +107,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean existsByUsername(String username) {
         return userDao.existsByUsername(username);
+    }
+
+    @Override
+    public Role changeRole(String username, String roleName) {
+        Role role = roleService.findByName(roleName);
+        User user = findByUsername(username);
+        user.setRole(role);
+        return save(user).getRole();
     }
 }
