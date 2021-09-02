@@ -16,4 +16,6 @@ public interface UserService extends BasicServiceSkeleton<User>, UserDetailsServ
     boolean activateUser(String username);
 
     boolean deactivateUser(String username);
+
+    boolean existsByUsername(String username);
 }

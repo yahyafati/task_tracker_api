@@ -67,4 +67,9 @@ public class UserController implements BasicRestControllerSkeleton<User>{
     public boolean activateUser(@PathVariable String username) {
         return userService.activateUser(username);
     }
+
+    @GetMapping("/exists/{username}")
+    public boolean existsByUsername(@PathVariable String username) {
+        return userService.existsByUsername(username);
+    }
 }

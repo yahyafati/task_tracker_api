@@ -102,4 +102,9 @@ public class UserServiceImpl implements UserService {
     public boolean deactivateUser(String username) {
         return setActiveStatus(username, false);
     }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return userDao.existsByUsername(username);
+    }
 }
