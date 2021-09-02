@@ -1,10 +1,12 @@
 package com.yahya.task.tracker.tasktracker.restController;
 
 import com.yahya.task.tracker.tasktracker.model.security.Role;
+import com.yahya.task.tracker.tasktracker.security.UserRole;
 import com.yahya.task.tracker.tasktracker.service.RoleService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/role")
@@ -19,7 +21,10 @@ public class RoleController implements BasicRestControllerSkeleton<Role>{
     @Override
     @GetMapping("")
     public List<Role> getAll() {
-        return roleService.findAll();
+        return roleService
+                .findAll()
+                .stream().filter(role -> !role.getName().equalsIgnoreCase(UserRole.SUPER_ADMIN.name()))
+                .collect(Collectors.toList());
     }
 
     @Override
