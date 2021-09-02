@@ -44,6 +44,10 @@ public class User implements UserDetails {
         return role.getAuthorities();
     }
 
+    public boolean isActive() {
+        return isAccountNonExpired && isAccountNonLocked && isCredentialsNonExpired && isEnabled;
+    }
+
     public void activate() {
         setAccountNonExpired(true);
         setAccountNonLocked(true);

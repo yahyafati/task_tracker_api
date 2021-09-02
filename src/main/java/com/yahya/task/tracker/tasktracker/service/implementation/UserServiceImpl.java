@@ -81,4 +81,25 @@ public class UserServiceImpl implements UserService {
     public UserMeta findUserMetaByUsername(String username) {
         return new UserMeta(findByUsername(username));
     }
+
+    @Override
+    public boolean setActiveStatus(String username, boolean status) {
+        User user = findByUsername(username);
+        if (status) {
+            user.activate();
+        } else {
+            user.setEnabled(false);
+        }
+        return save(user).isActive();
+    }
+
+    @Override
+    public boolean activateUser(String username) {
+        return setActiveStatus(username, true);
+    }
+
+    @Override
+    public boolean deactivateUser(String username) {
+        return setActiveStatus(username, false);
+    }
 }

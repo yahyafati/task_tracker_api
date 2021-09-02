@@ -56,4 +56,15 @@ public class UserController implements BasicRestControllerSkeleton<User>{
     public void delete(@PathVariable Integer id) {
         userService.deleteById(id);
     }
+
+
+    @PatchMapping("/disable/{username}")
+    public boolean deactivateUser(@PathVariable String username) {
+        return userService.deactivateUser(username);
+    }
+
+    @PatchMapping("/enable/{username}")
+    public boolean activateUser(@PathVariable String username) {
+        return userService.activateUser(username);
+    }
 }
