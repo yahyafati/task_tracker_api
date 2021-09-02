@@ -11,10 +11,10 @@ import javax.swing.*;
 public class TaskTrackerApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext ctx =
-                SpringApplication.run(TaskTrackerApplication.class, args);
-        System.out.println("Application Started at http://localhost:4200");
-//        startFrame(args);
+//        ConfigurableApplicationContext ctx =
+//                SpringApplication.run(TaskTrackerApplication.class, args);
+//        System.out.println("Application Started at http://localhost:4200");
+        startFrame(args);
     }
 
     public static void startFrame(String[] args) {
