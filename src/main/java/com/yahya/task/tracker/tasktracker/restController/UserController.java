@@ -4,8 +4,12 @@ import com.yahya.task.tracker.tasktracker.model.User;
 import com.yahya.task.tracker.tasktracker.model.helper.UserMeta;
 import com.yahya.task.tracker.tasktracker.model.security.Role;
 import com.yahya.task.tracker.tasktracker.service.UserService;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -58,6 +62,15 @@ public class UserController implements BasicRestControllerSkeleton<User> {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         userService.deleteById(id);
+    }
+
+    @GetMapping("/getCurrentUser")
+    public UserMeta getCurrentUser(Principal principal, HttpServletResponse response) {
+        if (StringUtils.isEmpty(principal.getName())) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            throw new RuntimeException(new AccessDeniedException("No user token is given in the header to get the user."));
+        }
+        return userService.findUserMetaByUsername(principal.getName());
     }
 
     @PutMapping("/resetPassword")
