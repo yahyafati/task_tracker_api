@@ -1,9 +1,7 @@
 package com.yahya.task.tracker.tasktracker;
 
 import com.yahya.task.tracker.tasktracker.gui.MainFrame;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 
 import javax.swing.*;
 

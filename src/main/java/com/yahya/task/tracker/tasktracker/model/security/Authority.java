@@ -11,7 +11,9 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Getter @Setter @ToString
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 public class Authority implements GrantedAuthority {
 

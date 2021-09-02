@@ -100,13 +100,13 @@ public class TaskServiceImpl implements TaskService {
     public List<Task> findAll() {
         return taskDao.findAll();
     }
-    
+
     @Override
     public List<Task> findAllForCurrentUser() {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         return findAll()
                 .stream()
-                .filter(task ->Helpers.isUserValidForTask(task, principal.getName()))
+                .filter(task -> Helpers.isUserValidForTask(task, principal.getName()))
                 .collect(Collectors.toList());
     }
 

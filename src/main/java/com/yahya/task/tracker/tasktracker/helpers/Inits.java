@@ -65,7 +65,7 @@ public class Inits {
         };
     }
 
-//    @Bean
+    //    @Bean
     public CommandLineRunner initializeDatabase(TaskService taskService, ProfileService profileService, TrackService trackService) {
         return args -> {
             if (taskService.findAll().size() > 0) return;

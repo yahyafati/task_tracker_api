@@ -29,6 +29,7 @@ public class MainFrame extends JFrame {
     TrayIcon trayIcon = null;
 
     private ConfigurableApplicationContext ctx;
+
     public MainFrame(String[] args) {
         this.args = args;
         mainFrame = this;
@@ -221,8 +222,7 @@ public class MainFrame extends JFrame {
         JPanel buttons = new JPanel();
 
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.PAGE_AXIS));
-        buttons.setBounds(0,0, getWidth(), getHeight());
-
+        buttons.setBounds(0, 0, getWidth(), getHeight());
 
 
         startServiceButton = new Button("Start",

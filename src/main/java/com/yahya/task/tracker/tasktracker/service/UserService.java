@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface UserService extends BasicServiceSkeleton<User>, UserDetailsService {
 
     User findByUsername(String username);
+
     User saveUserMeta(UserMeta userMeta);
 
     UserMeta findUserMetaByUsername(String username);

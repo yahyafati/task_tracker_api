@@ -12,9 +12,9 @@ import static com.yahya.task.tracker.tasktracker.security.Permission.*;
 public enum UserRole {
 
     USER(new HashSet<>(
-                Arrays.asList(TASK_READ, TRACK_READ, TASK_WRITE, TRACK_WRITE)
-            )
-        ),
+            Arrays.asList(TASK_READ, TRACK_READ, TASK_WRITE, TRACK_WRITE)
+    )
+    ),
     ADMIN(new HashSet<>(
             Arrays.stream(Permission.values()).collect(Collectors.toSet())
     )),

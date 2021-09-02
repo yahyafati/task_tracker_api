@@ -14,8 +14,7 @@ public enum Permission {
     USER_READ("user:read"),
     USER_WRITE("user:write"),
     USER_PROFILE_READ("userProfile:read"),
-    USER_PROFILE_WRITE("userProfile:write")
-    ;
+    USER_PROFILE_WRITE("userProfile:write");
 
     private final String permission;
 

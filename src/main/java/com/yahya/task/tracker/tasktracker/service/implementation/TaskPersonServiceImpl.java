@@ -1,10 +1,10 @@
 package com.yahya.task.tracker.tasktracker.service.implementation;
 
 import com.yahya.task.tracker.tasktracker.dao.TaskPersonDao;
-import com.yahya.task.tracker.tasktracker.model.TaskPerson;
 import com.yahya.task.tracker.tasktracker.model.Profile;
-import com.yahya.task.tracker.tasktracker.service.TaskPersonService;
+import com.yahya.task.tracker.tasktracker.model.TaskPerson;
 import com.yahya.task.tracker.tasktracker.service.ProfileService;
+import com.yahya.task.tracker.tasktracker.service.TaskPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

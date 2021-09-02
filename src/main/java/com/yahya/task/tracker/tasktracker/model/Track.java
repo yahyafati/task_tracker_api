@@ -12,7 +12,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter @Setter @ToString
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 public class Track {
 
@@ -31,7 +33,7 @@ public class Track {
     private User owner;
 
     public Track(String title, String description, LocalDate date) {
-        this(title, description,date, null);
+        this(title, description, date, null);
     }
 
     public Track(String title, String description, LocalDate date, Task task) {

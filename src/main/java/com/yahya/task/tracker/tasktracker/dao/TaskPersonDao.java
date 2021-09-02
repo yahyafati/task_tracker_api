@@ -10,7 +10,8 @@ import java.util.List;
 public interface TaskPersonDao extends JpaRepository<TaskPerson, Integer> {
 
     void deleteAllByProfileId(Integer id);
-    void  deleteAllByTaskId(Integer id);
+
+    void deleteAllByTaskId(Integer id);
 
     List<TaskPerson> findAllByProfileId(Integer profileId);
 

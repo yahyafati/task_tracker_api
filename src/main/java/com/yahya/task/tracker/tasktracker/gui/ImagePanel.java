@@ -13,6 +13,7 @@ public class ImagePanel extends JComponent {
     public ImagePanel(Image image) {
         this.image = image;
     }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

@@ -1,18 +1,18 @@
 package com.yahya.task.tracker.tasktracker.model.helper;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.yahya.task.tracker.tasktracker.model.Department;
-import com.yahya.task.tracker.tasktracker.model.DepartmentProfile;
-import com.yahya.task.tracker.tasktracker.model.User;
 import com.yahya.task.tracker.tasktracker.model.Profile;
+import com.yahya.task.tracker.tasktracker.model.User;
 import com.yahya.task.tracker.tasktracker.model.security.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserMeta {
 
     private String username;

@@ -6,7 +6,7 @@ import java.awt.*;
 public class StatusLabel extends JLabel {
 
     public StatusLabel(Icon icon) {
-        super("",icon, CENTER);
+        super("", icon, CENTER);
     }
 
     @Override
@@ -22,8 +22,8 @@ public class StatusLabel extends JLabel {
             int h = icon.getImage().getHeight(null);
             int w = icon.getImage().getWidth(null);
 
-            int startX = getWidth()/2 - w/2;
-            int startY = getHeight()/2 - h/2;
+            int startX = getWidth() / 2 - w / 2;
+            int startY = getHeight() / 2 - h / 2;
 
             g2.drawImage(icon.getImage(), startX, startY, null);
         }

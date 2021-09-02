@@ -10,8 +10,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Getter @Setter @ToString
-@NoArgsConstructor @AllArgsConstructor
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Task {
 
@@ -25,7 +28,8 @@ public class Task {
     private LocalDateTime addedDate = LocalDateTime.now();
     private LocalDate dueDate;
 
-    @Enumerated(EnumType.STRING) @Builder.Default
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
     private Status status = Status.ACTIVE;
 
     @Enumerated(EnumType.STRING)
@@ -35,11 +39,14 @@ public class Task {
     private User owner;
 
     @OneToMany(orphanRemoval = true, mappedBy = "task", fetch = FetchType.EAGER)
-    @ToString.Exclude @Builder.Default
+    @ToString.Exclude
+    @Builder.Default
     private Set<TaskPerson> assignees = new HashSet<>();
 
     @OneToMany(orphanRemoval = true, mappedBy = "task", fetch = FetchType.EAGER)
-    @JsonIgnore @ToString.Exclude @Builder.Default
+    @JsonIgnore
+    @ToString.Exclude
+    @Builder.Default
     private Set<Track> tracks = new HashSet<>();
 
     private void addAssignee(Profile profile, boolean leader) {

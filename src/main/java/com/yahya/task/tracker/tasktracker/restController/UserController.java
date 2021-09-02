@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
-public class UserController implements BasicRestControllerSkeleton<User>{
+public class UserController implements BasicRestControllerSkeleton<User> {
 
     private final UserService userService;
 
@@ -38,7 +38,9 @@ public class UserController implements BasicRestControllerSkeleton<User>{
 
     @Override
     @Deprecated
-    public User add(User item) { return userService.save(item); }
+    public User add(User item) {
+        return userService.save(item);
+    }
 
     @PostMapping("")
     public User add(@RequestBody UserMeta userMeta) {

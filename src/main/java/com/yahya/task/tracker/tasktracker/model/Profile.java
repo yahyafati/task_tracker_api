@@ -9,9 +9,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Getter @Setter @ToString
+@Getter
+@Setter
+@ToString
 @Builder
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class Profile {
 
     @Id
@@ -24,14 +27,17 @@ public class Profile {
     private String profilePhotoURL;
 
     @OneToOne(mappedBy = "profile")
-    @JsonIgnore @ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private User user;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "profile")
     private DepartmentProfile departmentProfile;
 
     @OneToMany(orphanRemoval = true, mappedBy = "profile", fetch = FetchType.EAGER)
-    @JsonIgnore @ToString.Exclude @Builder.Default
+    @JsonIgnore
+    @ToString.Exclude
+    @Builder.Default
     private Set<TaskPerson> taskPeople = new HashSet<>();
 
     public Profile(UserMeta userMeta) {

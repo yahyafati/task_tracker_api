@@ -11,8 +11,12 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Getter @Setter @ToString
-@Builder @NoArgsConstructor @AllArgsConstructor
+@Getter
+@Setter
+@ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements UserDetails {
 
     @Id
@@ -23,7 +27,8 @@ public class User implements UserDetails {
     private String username;
 
     @Column(nullable = false)
-    @JsonIgnore @ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private String password;
 
     private boolean isAccountNonExpired = true;
@@ -32,7 +37,8 @@ public class User implements UserDetails {
     private boolean isEnabled = true;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore @ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private Profile profile;
 
     @ManyToOne

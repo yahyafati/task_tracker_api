@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/role")
-public class RoleController implements BasicRestControllerSkeleton<Role>{
+public class RoleController implements BasicRestControllerSkeleton<Role> {
 
     private final RoleService roleService;
 

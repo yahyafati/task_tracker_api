@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/taskperson")
-public class TaskPersonController implements BasicRestControllerSkeleton<TaskPerson>{
+public class TaskPersonController implements BasicRestControllerSkeleton<TaskPerson> {
 
     private final TaskPersonService taskPersonService;
 
