@@ -21,4 +21,8 @@ public interface UserService extends BasicServiceSkeleton<User>, UserDetailsServ
     boolean existsByUsername(String username);
 
     Role changeRole(String username, String roleName);
+
+    void changePassword(String username, String password);
+
+    void resetPassword(String username);
 }

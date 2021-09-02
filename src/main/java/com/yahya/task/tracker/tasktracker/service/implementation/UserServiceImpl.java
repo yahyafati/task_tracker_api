@@ -116,4 +116,16 @@ public class UserServiceImpl implements UserService {
         user.setRole(role);
         return save(user).getRole();
     }
+
+    @Override
+    public void changePassword(String username, String password) {
+        User user = findByUsername(username);
+        user.setPassword(passwordEncoder.encode(password));
+        userDao.save(user);
+    }
+
+    @Override
+    public void resetPassword(String username) {
+        changePassword(username, "passwordReset"+username.toLowerCase());
+    }
 }

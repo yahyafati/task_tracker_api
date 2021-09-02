@@ -58,6 +58,10 @@ public class UserController implements BasicRestControllerSkeleton<User>{
         userService.deleteById(id);
     }
 
+    @PutMapping("/resetPassword")
+    public void resetPassword(@RequestParam String username) {
+        userService.resetPassword(username);
+    }
 
     @PatchMapping("/deactivate/{username}")
     public boolean deactivateUser(@PathVariable String username) {
