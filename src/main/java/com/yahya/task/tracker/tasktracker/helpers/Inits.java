@@ -2,6 +2,7 @@ package com.yahya.task.tracker.tasktracker.helpers;
 
 
 import com.yahya.task.tracker.tasktracker.model.*;
+import com.yahya.task.tracker.tasktracker.model.helper.UserMeta;
 import com.yahya.task.tracker.tasktracker.model.security.Authority;
 import com.yahya.task.tracker.tasktracker.model.security.Role;
 import com.yahya.task.tracker.tasktracker.security.Permission;
@@ -47,18 +48,24 @@ public class Inits {
     public CommandLineRunner initializeSuperAdmin(UserService userService,
                                                   RoleService roleService) {
 //        TODO Change this to value in properties file instead of hardcoding it
-
 //        TODO Change this ugly code to more fitting code. Return null on non existence from all services
         return args -> {
             try {
                 userService.findByUsername("superadmin");
             } catch (Exception e) {
                 System.err.println("No Super-Admin Found. Creating a new one.");
-                User superAdmin = User.builder()
-                        .username("superadmin")
-                        .password("superadmin")
-                        .role(roleService.findByName("SUPER_ADMIN"))
-                        .build();
+                UserMeta superUserMeta = new UserMeta(
+                        "superadmin",
+                        "superadmin",
+                        "Super",
+                        "Admin",
+                        "superadmin@company.et",
+                        "Superadmin",
+                        null,
+                        roleService.findByName("SUPER_ADMIN"),
+                        "Super Admin"
+                );
+                User superAdmin = new User(superUserMeta);
                 superAdmin.activate();
                 userService.save(superAdmin);
             }

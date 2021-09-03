@@ -38,9 +38,6 @@ public class UserServiceImpl implements UserService {
         if (item.getId() == 0) {
             if (item.getRole() == null) {
                 item.setRole(roleService.findByName("USER"));
-            } else {
-//                TODO Change it in Role Select and Department Select in frontend
-                item.setRole(roleService.findByName(item.getRole().getName()));
             }
             final String encodedPassword = passwordEncoder.encode(item.getPassword());
             item.setPassword(encodedPassword);
