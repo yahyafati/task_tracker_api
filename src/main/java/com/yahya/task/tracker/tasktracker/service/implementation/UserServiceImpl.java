@@ -123,6 +123,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean isPasswordValid(String username, String password) {
+        User user = findByUsername(username);
+        return passwordEncoder.matches(password, user.getPassword());
+    }
+
+    @Override
     public void changePassword(String username, String password) {
         User user = findByUsername(username);
         user.setPassword(passwordEncoder.encode(password));

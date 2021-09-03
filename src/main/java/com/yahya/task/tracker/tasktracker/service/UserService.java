@@ -25,6 +25,8 @@ public interface UserService extends BasicServiceSkeleton<User>, UserDetailsServ
 
     Role changeRole(String username, String roleName);
 
+    boolean isPasswordValid(String username, String password);
+
     void changePassword(String username, String password);
 
     void resetPassword(String username);

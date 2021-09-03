@@ -1,5 +1,6 @@
 package com.yahya.task.tracker.tasktracker.restController;
 
+import com.yahya.task.tracker.tasktracker.helpers.ChangePassword;
 import com.yahya.task.tracker.tasktracker.model.User;
 import com.yahya.task.tracker.tasktracker.model.helper.UserMeta;
 import com.yahya.task.tracker.tasktracker.model.security.Role;
@@ -77,6 +78,18 @@ public class UserController implements BasicRestControllerSkeleton<User> {
             throw new RuntimeException(new AccessDeniedException("No user token is given in the header to get the user."));
         }
         return userService.findUserMetaByUsername(principal.getName());
+    }
+
+    @PatchMapping("/changePassword")
+    public void changePassword(
+            @RequestParam String username,
+            @RequestBody ChangePassword changePassword,
+            HttpServletResponse response) {
+        if (!userService.isPasswordValid(username, changePassword.getCurrentPassword())) {
+            response.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
+            return;
+        }
+        userService.changePassword(username, changePassword.getNewPassword());
     }
 
     @PutMapping("/resetPassword")
