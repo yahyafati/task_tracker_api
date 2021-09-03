@@ -51,6 +51,12 @@ public class UserController implements BasicRestControllerSkeleton<User> {
         return userService.saveUserMeta(userMeta);
     }
 
+    @PutMapping("/meta/{username}")
+    public UserMeta update(@PathVariable String username, @RequestBody UserMeta userMeta) {
+        userMeta.setUsername(username);
+        return userService.updateUserMeta(userMeta);
+    }
+
     @Override
     @PutMapping("/{id}")
     public User update(@PathVariable Integer id, @RequestBody User updatedItem) {

@@ -11,6 +11,8 @@ public interface UserService extends BasicServiceSkeleton<User>, UserDetailsServ
 
     User saveUserMeta(UserMeta userMeta);
 
+    UserMeta updateUserMeta(UserMeta userMeta);
+
     UserMeta findUserMetaByUsername(String username);
 
     boolean setActiveStatus(String username, boolean status);

@@ -76,6 +76,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserMeta updateUserMeta(UserMeta userMeta) {
+        User oldUser = findByUsername(userMeta.getUsername());
+        User updatedUser = new User(userMeta);
+        updatedUser.setId(oldUser.getId());
+        return new UserMeta(save(updatedUser));
+    }
+
+    @Override
     public UserMeta findUserMetaByUsername(String username) {
         return new UserMeta(findByUsername(username));
     }
