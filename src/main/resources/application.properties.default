@@ -12,6 +12,6 @@ spring.jpa.hibernate.ddl-auto=update
 #server.error.whitelabel.enabled=false
 #server.error.path=/error
 
-application.jwt.secretKey=ThisIsSuchASecureKeyThisIsSuchASecureKeyThisIsSuchASecureKeyThisIsSuchASecureKeyThisIsSuchASecureKey
-application.jwt.tokenPrefix=Bearer 
-application.jwt.tokenExpirationAfterDays=14
+application.jwt.secretKey=secret-key
+application.jwt.tokenPrefix=prefix to the token
+application.jwt.tokenExpirationAfterDays=3

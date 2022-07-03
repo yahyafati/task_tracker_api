@@ -40,7 +40,7 @@ public class MainFrame extends JFrame {
         setTitle("Task Tracker Server");
         init();
         initEvents();
-        initTray();
+        // initTray();
 
         workOnArgs();
     }
@@ -126,7 +126,7 @@ public class MainFrame extends JFrame {
                         return;
                     }
                 }
-                if (SystemTray.isSupported()) {
+                if (SystemTray.isSupported() && trayIcon != null) {
                     SystemTray.getSystemTray().remove(trayIcon);
                 }
                 System.exit(0);
@@ -166,7 +166,8 @@ public class MainFrame extends JFrame {
 
     void setCurrentStatus(Status currentStatus) {
         status.setToolTipText(currentStatus.displayStatus());
-        trayIcon.setToolTip("Task Tracker Server - [" + currentStatus.getStatus() + "]");
+        if (trayIcon != null)
+            trayIcon.setToolTip("Task Tracker Server - [" + currentStatus.getStatus() + "]");
 
         ImageIcon imageIcon;
         if (currentStatus == Status.RUNNING) {

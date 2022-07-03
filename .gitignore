@@ -288,3 +288,5 @@ dist
 HELP.md
 TaskTracker.iml
 target/
+
+application.yaml

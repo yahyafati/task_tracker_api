@@ -1,0 +1,21 @@
+spring:
+    datasource:
+        url: jdbc:mysql://localhost:3306/taskTracker?createDatabaseIfNotExist=true
+        username: root
+        password: password
+    jpa:
+        show-sql: true
+        hibernate:
+            ddl-auto: update
+server:
+    port: 4200
+    error:
+        whitelabel:
+            enabled: false
+        path: /error
+
+application:
+  jwt:
+    secret-key: secret-key
+    token-prefix: 'TokenPrefix '
+    token-expiration-after-days: 1
