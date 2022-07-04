@@ -1,24 +1,37 @@
-version: '3.8'
+version: "3.8"
 services:
-  app:
-    image: openjdk:17-oracle
-    command: sh -c "yarn install && yarn run dev"
-    ports:
-      - 3000:3000
-    working_dir: /app
-    volumes:
-      - ./:/app
-    environment:
-      MYSQL_HOST: mysql
-      MYSQL_USER: root
-      MYSQL_PASSWORD: secret
-      MYSQL_DB: todos
   mysql:
-    image: mysql:5.7
+    image: mysql:8
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQLDB_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQLDB_DATABASE
+    ports:
+      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     volumes:
-      - todo-mysql-data:/var/lib/mysql
-    environment: 
-      MYSQL_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: todos
+      - ~/apps/mysql:/var/lib/mysql:rw
+    expose:
+      - $MYSQLDB_DOCKER_PORT
+  app:
+    depends_on:
+      - mysql
+    image: maven:3-openjdk-17
+    command: mvn spring-boot:run
+    restart: on-failure
+    working_dir: /app
+    env_file: .env
+    ports:
+      - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/${MYSQLDB_DATABASE}?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_username: ${MYSQLDB_USER}
+      SPRING_DATASOURCE_password: ${MYSQLDB_ROOT_PASSWORD}
+      SPRING_DATASOURCE_DRIVER_class-name: com.mysql.cj.jdbc.Driver
+      SPRING_DATASOURCE_JPA_HIBERNATE_ddl-auto: update
+    volumes:
+      - ~/.m2:/root/.m2:rw
+      - .:/app
+
 volumes:
-  todo-mysql-data:
+  db:
